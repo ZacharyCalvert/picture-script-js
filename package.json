@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/ZacharyCalvert/picture-script-js/issues"
   },
-  "homepage": "https://github.com/ZacharyCalvert/picture-script-js#readme"
+  "homepage": "https://github.com/ZacharyCalvert/picture-script-js#readme",
+  "bin": {
+    "ps-import": "./ps-import.js"
+   }
 }
