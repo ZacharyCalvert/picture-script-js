@@ -23,5 +23,8 @@
   "homepage": "https://github.com/ZacharyCalvert/picture-script-js#readme",
   "bin": {
     "ps-import": "./ps-import.js"
-   }
+  },
+  "dependencies": {
+    "commander": "^2.15.1"
+  }
 }
