@@ -26,6 +26,9 @@
   },
   "dependencies": {
     "commander": "^2.15.1",
-    "empty-dir": "^1.0.0"
+    "create-file": "^1.0.1",
+    "empty-dir": "^1.0.0",
+    "mkdirp": "^0.5.1",
+    "write": "^1.0.3"
   }
 }
