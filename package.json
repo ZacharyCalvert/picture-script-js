@@ -22,9 +22,10 @@
   },
   "homepage": "https://github.com/ZacharyCalvert/picture-script-js#readme",
   "bin": {
-    "ps-import": "./ps-import.js"
+    "pic-man": "./pic-man.js"
   },
   "dependencies": {
-    "commander": "^2.15.1"
+    "commander": "^2.15.1",
+    "empty-dir": "^1.0.0"
   }
 }
