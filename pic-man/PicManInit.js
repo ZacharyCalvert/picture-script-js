@@ -2,6 +2,8 @@
 var fs = require ('fs');
 var writeFile = require('write');
 var mkdirp = require('mkdirp');
+const low = require('lowdb');
+const FileSync = require('lowdb/adapters/FileSync');
 
 module.exports = class PicManInit {
 
@@ -19,7 +21,11 @@ module.exports = class PicManInit {
            if (files.length > 0) {
               console.error("%s is not empty and has not been initialized for media management.", folder)
            } else {
-            writeFile.sync(folder + "/pic-man.db", "");
+            var lowDbPath = folder + "/pic-man.db";
+            writeFile.sync(lowDbPath, "");
+            const adapter = new FileSync(lowDbPath);
+            var mediaLowDb = low(adapter);
+            mediaLowDb.defaults({ media: [], tags: []}).write();
            }
         }
       });

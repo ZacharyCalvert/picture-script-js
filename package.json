@@ -1,7 +1,7 @@
 {
-  "name": "picture-script",
+  "name": "med-man",
   "version": "0.0.1",
-  "description": "Javascript utilities for input and export of personal media.",
+  "description": "Javascript utilities for input and export of personal media including photos and videos.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,7 +13,8 @@
   "keywords": [
     "Picture",
     "Video",
-    "Media"
+    "Media",
+    "Photo"
   ],
   "author": "Zach Calvert",
   "license": "Apache-2.0",
@@ -22,13 +23,15 @@
   },
   "homepage": "https://github.com/ZacharyCalvert/picture-script-js#readme",
   "bin": {
-    "pic-man": "./pic-man.js"
+    "med-man": "./med-man.js"
   },
   "dependencies": {
     "commander": "^2.15.1",
     "create-file": "^1.0.1",
     "empty-dir": "^1.0.0",
+    "lowdb": "^1.0.0",
     "mkdirp": "^0.5.1",
+    "sha256-file": "^1.0.0",
     "write": "^1.0.3"
   }
 }

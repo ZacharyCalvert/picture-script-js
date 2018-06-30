@@ -13,5 +13,7 @@ List of reference documentation consulted for preparing this utility suite:
 
 ```
 npm install -g
-ps-import ?
+med-man ?
 ```
+
+Start with ```med-man init <path to folder>``` where the path to folder is the folder you want to use to store all of your media files.  
