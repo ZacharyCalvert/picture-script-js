@@ -3,6 +3,7 @@ const FileSync = require('lowdb/adapters/FileSync')
 var fs = require ('fs');
 var path = require('path');
 var sha256File = require('sha256-file');
+var EXIF = require('../exif-js/exif.js')
 
 
 const MEDIA = ["JPEG", "JPG", "TIFF", "GIF", "BMP", "PNG", "CR2", "AVI", "MOV", "WMV", "MP4", "MV4P", "MPG", "MPEG", "M4V"];
@@ -23,6 +24,41 @@ function addPath(entry, path) {
     }
 }
 
+function addFileDateFromExif(entry, path, mediaDb) {
+    var extension = path.toUpperCase().split('.').pop();
+    if (['JPG', 'JPEG'].includes(extension)) {
+        fs.readFile(path, (err, data) => {
+            if (err) throw err;
+            
+            var ab = new ArrayBuffer(data.length);
+            var view = new Uint8Array(ab);
+            for (var i = 0; i < data.length; ++i) {
+              view[i] = data[i];
+            }
+            var readExif = EXIF.readFromBinaryFile(ab);
+            if (readExif) {
+                var dates = [readExif["DateTimeOriginal"], readExif["DateTimeDigitized"], readExif["DateTime"], readExif["dateCreated"]];
+                dates = dates.map(x => x ? new Date(Date.parse(x.split(' ').shift().replace(':', "-"))) : x);
+                writeEarliestFoundDate(entry, mediaDb, dates);
+            }
+        });
+    }
+}
+
+function writeEarliestFoundDate(entry, mediaDb, mediaDates) {
+    if (mediaDates) {
+        mediaDates = mediaDates.filter(date => date && date.getTime() > 0);
+        if (mediaDates.length > 0) { 
+            if (entry.earliestDate) {
+                mediaDates.push(new Date(entry.earliestDate));
+            }
+            mediaDates.sort((a, b) => a.getTime() - b.getTime() );
+            entry.earliestDate = mediaDates[0].getTime();
+            mediaDb.write();
+        }
+    }
+}
+
 function addFileDate(entry, path, mediaDb) {
     fs.stat(path, function(err, stat) {
         if (err) {
@@ -30,17 +66,9 @@ function addFileDate(entry, path, mediaDb) {
             console.error(error);
         } else {
             // basically looking for earliest, non-epoc date.
-            var fileTimes = [stat.birthtime, stat.atime, stat.mtime, stat.ctime].filter(time => time.getTime() > 0);
-            fileTimes.sort((a, b) => a.getTime() - b.getTime() );
-            var earliestTime = fileTimes[0];
+            var fileTimes = [stat.birthtime, stat.atime, stat.mtime, stat.ctime];
             // TODO EXIF DATA
-            if (entry.dates) {
-                var dates = new Set(entry.dates);
-                dates.add(earliestTime.getTime());
-                entry.dates = Array.from(dates);
-            } else {
-                entry.dates = [earliestTime.getTime()];
-            }
+            writeEarliestFoundDate(entry, mediaDb, fileTimes);
             mediaDb.write();
         }
     });
@@ -68,6 +96,7 @@ function reviewFile(file, lowDb) {
     addPath(found, file);
     addExtension(found, file);
     addFileDate(found, file, mediaDb);
+    addFileDateFromExif(found, file, mediaDb);
     mediaDb.write();
 }
 
