@@ -7,10 +7,9 @@ var DirectoryImporter = require('./pic-man/DirectoryImporter.js')
 
 program
   .command('import <dir> <managed>')
+  .option('-n, --nocopy', 'Index but do not copy')
   .action(function(dir, managed, cmd) {
-    console.log('import directory: %s', dir);
-    console.log('managed directory: %s', managed);
-    new DirectoryImporter(dir, managed);
+    new DirectoryImporter(dir, managed, cmd);
   })
 program.command('init <managed>')
   .action(function(managed, cmd) {
