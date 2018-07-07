@@ -4,7 +4,7 @@
   "description": "Javascript utilities for input and export of personal media including photos and videos.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -33,5 +33,8 @@
     "mkdirp": "^0.5.1",
     "sha256-file": "^1.0.0",
     "write": "^1.0.3"
+  },
+  "devDependencies": {
+    "mocha": "^5.2.0"
   }
 }
