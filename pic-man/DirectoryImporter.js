@@ -6,6 +6,7 @@ var sha256File = require('sha256-file');
 var EXIF = require('../exif-js/exif.js');
 var PathService = require('./PathService.js');
 var mkdirp = require('mkdirp');
+var mv = require('mv')
 
 const MEDIA = ["JPEG", "JPG", "TIFF", "GIF", "BMP", "PNG", "CR2", "AVI", "MOV", "WMV", "MP4", "MV4P", "MPG", "MPEG", "M4V"];
 
@@ -44,7 +45,7 @@ module.exports = function (directory, managed, cmd) {
                 stats.errors++;
                 console.error(err);
             } else {
-                fs.copyFile(path, pathService.getActual(), fs.constants.COPYFILE_EXCL, (err) => {
+                var updateEntry = (err) => {
                     if (err) {
                         stats.errors++;
                         console.log("Failure to copy %s", path);
@@ -54,7 +55,13 @@ module.exports = function (directory, managed, cmd) {
                         mediaDb.write();
                         stats.copied++;
                     }
-                });
+                }
+                if (command.move) {
+                    mv(path, pathService.getActual(), {clobber: false}, updateEntry);
+                } else {
+                    fs.copyFile(path, pathService.getActual(), fs.constants.COPYFILE_EXCL, updateEntry);
+                }
+                
             }
         });
     }

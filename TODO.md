@@ -1,4 +1,13 @@
 
+- move instead of copy
+- tag management 
+- tag on import
+- test duplicates (path but cleanup)
+- sample export 
+
+
+
+
 # Docs
 
 Rename---again?  Picture->Media?

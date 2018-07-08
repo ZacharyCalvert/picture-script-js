@@ -8,6 +8,7 @@ var DirectoryImporter = require('./pic-man/DirectoryImporter.js')
 program
   .command('import <dir> <managed>')
   .option('-n, --nocopy', 'Index but do not copy')
+  .option('-m, --move', 'Move media instead of copy it')
   .action(function(dir, managed, cmd) {
     new DirectoryImporter(dir, managed, cmd);
   });
