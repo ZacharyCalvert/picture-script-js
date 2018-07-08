@@ -1,5 +1,4 @@
-
-- move instead of copy
+- migrate (re-arrange)
 - tag management 
 - tag on import
 - test duplicates (path but cleanup)

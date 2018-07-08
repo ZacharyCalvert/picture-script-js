@@ -7,14 +7,22 @@ var EXIF = require('../exif-js/exif.js');
 var PathService = require('./PathService.js');
 var mkdirp = require('mkdirp');
 var mv = require('mv')
+var onExit = require('on-exit');
 
 const MEDIA = ["JPEG", "JPG", "TIFF", "GIF", "BMP", "PNG", "CR2", "AVI", "MOV", "WMV", "MP4", "MV4P", "MPG", "MPEG", "M4V"];
 
 module.exports = function (directory, managed, cmd) {
 
     var command = cmd;
-    var stats = {injested:0, errors:0, copied:0};
+    var stats = {errors:0, newsha:0, injested:0, copied:0};
     var managedDirectory = managed;
+
+    onExit(function () {
+        console.log("Errors encountered: %d", stats.errors);
+        console.log("New media files: %d", stats.newsha);
+        console.log("Total files processed: %d", stats.injested);
+        console.log("Files copied: %d", stats.copied);
+    });
 
     if (fs.existsSync(managed) && fs.existsSync(managed + "/pic-man.db")) {
         var mediaLowDb = openDb(managed + "/pic-man.db");
@@ -80,7 +88,10 @@ module.exports = function (directory, managed, cmd) {
         var extension = path.toUpperCase().split('.').pop();
         if (['JPG', 'JPEG'].includes(extension)) {
             fs.readFile(path, (err, data) => {
-                if (err) throw err;
+                if (err) {
+                    stats.errors++;
+                    throw err;
+                }
                 
                 var ab = new ArrayBuffer(data.length);
                 var view = new Uint8Array(ab);
@@ -114,6 +125,7 @@ module.exports = function (directory, managed, cmd) {
     function addFileDate(entry, path, mediaDb) {
         fs.stat(path, function(err, stat) {
             if (err) {
+                stats.errors++;
                 console.error("Error occurred processing %s", path);
                 console.error(error);
             } else {
@@ -145,6 +157,7 @@ module.exports = function (directory, managed, cmd) {
         var mediaDb = lowDb.get('media');
         var found = mediaDb.find({sha256: sha256Sum}).value();
         if (!found) {
+            stats.newsha++;
             found = {sha256: sha256Sum};
             mediaDb.push(found).write();
         }
@@ -160,12 +173,14 @@ module.exports = function (directory, managed, cmd) {
     function injest(toInjest, lowDb, cmd) {
         fs.stat(toInjest, function(err, stat) {
             if (err) {
+                stats.errors++;
                 console.error("Error occurred processing %s", toInjest);
                 console.error(error);
             } else {
                 if (stat.isDirectory()) {
                     fs.readdir(toInjest, function(err, list) {
                         if (err) {
+                            stats.errors++;
                             console.error("Error processing directory %s", toInjest);
                             console.error(err);
                         } else {
