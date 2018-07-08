@@ -10,10 +10,11 @@ program
   .option('-n, --nocopy', 'Index but do not copy')
   .action(function(dir, managed, cmd) {
     new DirectoryImporter(dir, managed, cmd);
-  })
+  });
+
 program.command('init <managed>')
   .action(function(managed, cmd) {
     new PicManInit(managed).init();
-  })
+  });
 
 program.parse(process.argv);
