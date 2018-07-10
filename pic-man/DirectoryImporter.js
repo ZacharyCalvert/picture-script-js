@@ -1,6 +1,5 @@
-const low = require('lowdb')
-const FileSync = require('lowdb/adapters/FileSync')
 var fs = require ('fs');
+var EntryManager = require('./EntryManager.js')
 var path = require('path');
 var sha256File = require('sha256-file');
 var EXIF = require('../exif-js/exif.js');
@@ -17,27 +16,28 @@ module.exports = function (directory, managed, cmd) {
     var stats = {errors:0, newsha:0, injested:0, copied:0};
     var managedDirectory = managed;
 
-    onExit(function () {
+    var exitFunction = function () {
         console.log("Errors encountered: %d", stats.errors);
         console.log("New media files: %d", stats.newsha);
         console.log("Total files processed: %d", stats.injested);
         console.log("Files copied: %d", stats.copied);
-    });
+        if (this.entryManager) {
+            this.entryManager.save();
+        }
+    }
+    exitFunction = exitFunction.bind(this);
+
+    onExit(exitFunction);
 
     if (fs.existsSync(managed) && fs.existsSync(managed + "/pic-man.db")) {
-        var mediaLowDb = openDb(managed + "/pic-man.db");
-        injest(directory, mediaLowDb);
+        this.entryManager = new EntryManager(managed + "/pic-man.db", stats);
+        injest(directory);
     } else {
         console.log("Managed folder '%s' is not initialized", managed);
-    }  
-
-    function openDb(lowDbPath) {
-        const adapter = new FileSync(lowDbPath);
-        var mediaLowDb = low(adapter);
-        return mediaLowDb;
+        throw managed + " folder is not initialized.";
     }
 
-    function copyIfRequired(entry, path, mediaDb) {
+    function copyIfRequired(entry, path) {
         var skipCopy = command.nocopy ? true : false;
         skipCopy |= (entry.storedAt ? true : false);
         
@@ -60,7 +60,6 @@ module.exports = function (directory, managed, cmd) {
                         console.error(err);
                     } else {
                         entry.storedAt = pathService.getRelative();
-                        mediaDb.write();
                         stats.copied++;
                     }
                 }
@@ -74,17 +73,7 @@ module.exports = function (directory, managed, cmd) {
         });
     }
 
-    function addPath(entry, path) {
-        if (entry.paths) {
-            var paths = new Set(entry.paths);
-            paths.add(path);
-            entry.paths = Array.from(paths);
-        } else {
-            entry.paths = [path];
-        }
-    }
-
-    function addFileDateFromExif(entry, path, mediaDb) {
+    function addFileDateFromExif(entry, path) {
         var extension = path.toUpperCase().split('.').pop();
         if (['JPG', 'JPEG'].includes(extension)) {
             fs.readFile(path, (err, data) => {
@@ -102,27 +91,19 @@ module.exports = function (directory, managed, cmd) {
                 if (readExif) {
                     var dates = [readExif["DateTimeOriginal"], readExif["DateTimeDigitized"], readExif["DateTime"], readExif["dateCreated"]];
                     dates = dates.map(x => x ? new Date(Date.parse(x.split(' ').shift().replace(':', "-"))) : x);
-                    writeEarliestFoundDate(entry, mediaDb, dates);
+                    writeEarliestFoundDate(entry, dates);
                 }
             });
         }
     }
 
-    function writeEarliestFoundDate(entry, mediaDb, mediaDates) {
+    function writeEarliestFoundDate(entry, mediaDates) {
         if (mediaDates) {
-            mediaDates = mediaDates.filter(date => date && date.getTime() > 0);
-            if (mediaDates.length > 0) { 
-                if (entry.earliestDate) {
-                    mediaDates.push(new Date(entry.earliestDate));
-                }
-                mediaDates.sort((a, b) => a.getTime() - b.getTime() );
-                entry.earliestDate = mediaDates[0].getTime();
-                mediaDb.write();
-            }
+            this.entryManager.updateEarliestDate(entry, mediaDates);
         }
     }
 
-    function addFileDate(entry, path, mediaDb) {
+    function addFileDate(entry, path) {
         fs.stat(path, function(err, stat) {
             if (err) {
                 stats.errors++;
@@ -131,8 +112,7 @@ module.exports = function (directory, managed, cmd) {
             } else {
                 // basically looking for earliest, non-epoc date.
                 var fileTimes = [stat.birthtime, stat.atime, stat.mtime, stat.ctime];
-                writeEarliestFoundDate(entry, mediaDb, fileTimes);
-                mediaDb.write();
+                writeEarliestFoundDate(entry, fileTimes);
             }
         });
     }
@@ -143,34 +123,29 @@ module.exports = function (directory, managed, cmd) {
 
     function addExtension(entry, path) {
         var extension = getFileExtension(path);
-        if (entry.extensions) {
-            var extensions = new Set(entry.extensions);
-            extensions.add(extension);
-            entry.extensions = Array.from(extensions);
-        } else {
-            entry.extensions = [extension];
+        if (extension) {
+            this.entryManager.addExtension(entry, extension);
         }
     }
 
-    function reviewFile(file, lowDb, cmd) {
+    function reviewFile(file) {
+
+        var extension = file.toUpperCase().split('.').pop();
+        if (!MEDIA.includes(extension)) {
+            return; // ignore non-media file
+        }
+
         var sha256Sum = sha256File(file);
-        var mediaDb = lowDb.get('media');
-        var found = mediaDb.find({sha256: sha256Sum}).value();
-        if (!found) {
-            stats.newsha++;
-            found = {sha256: sha256Sum};
-            mediaDb.push(found).write();
-        }
-        addPath(found, file);
+        var found = this.entryManager.addOrCreateEntry(sha256Sum);
+        this.entryManager.addPath(found, file);
         addExtension(found, file);
-        addFileDate(found, file, mediaDb);
-        addFileDateFromExif(found, file, mediaDb);
-        copyIfRequired(found, file, mediaDb);
+        addFileDate(found, file);
+        addFileDateFromExif(found, file);
+        copyIfRequired(found, file);
         stats.injested++;
-        mediaDb.write();
     }
 
-    function injest(toInjest, lowDb, cmd) {
+    function injest(toInjest) {
         fs.stat(toInjest, function(err, stat) {
             if (err) {
                 stats.errors++;
@@ -186,15 +161,12 @@ module.exports = function (directory, managed, cmd) {
                         } else {
                             list.forEach(function (file) {
                                 file = path.resolve(toInjest, file);
-                                var extension = file.toUpperCase().split('.').pop();
-                                if (MEDIA.includes(extension)) {
-                                    injest(file, lowDb, cmd);
-                                }
+                                injest(file);
                             });
                         }
                     });
                 } else if (stat.isFile) {
-                    reviewFile(toInjest, lowDb);
+                    reviewFile(toInjest);
                 }
             }
         });

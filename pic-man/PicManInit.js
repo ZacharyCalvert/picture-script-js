@@ -1,8 +1,6 @@
 var fs = require ('fs');
-var writeFile = require('write');
 var mkdirp = require('mkdirp');
-const low = require('lowdb');
-const FileSync = require('lowdb/adapters/FileSync');
+var EntryManager = require('./EntryManager.js')
 
 function PicManInit(folder) {
   this.folder = folder;
@@ -10,11 +8,8 @@ function PicManInit(folder) {
 
 PicManInit.prototype.init = function() {
   
-  function initLowDb(path) {
-    writeFile.sync(path, "");
-    const adapter = new FileSync(path);
-    var mediaLowDb = low(adapter);
-    mediaLowDb.defaults({ media: [], tags: []}).write();
+  function initDb(path) {
+    EntryManager.initDb(path);
   }
 
   var folder = this.folder;
@@ -27,7 +22,7 @@ PicManInit.prototype.init = function() {
             console.error("%s is not empty and has not been initialized for media management.", folder)
          } else {
           var lowDbPath = folder + "/pic-man.db";
-          initLowDb(lowDbPath);
+          initDb(lowDbPath);
          }
       }
     });
@@ -35,7 +30,7 @@ PicManInit.prototype.init = function() {
     mkdirp(folder, function (err) {
       if (err) { console.error(err) 
       } else {
-        initLowDb(folder + "/pic-man.db");
+        initDb(folder + "/pic-man.db");
       }
     });
   }
