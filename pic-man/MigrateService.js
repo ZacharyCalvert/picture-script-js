@@ -43,6 +43,9 @@ function MigrateService(directory, managed, cmd)  {
     return;
   }
 
+  console.log("Database migration complete, initializing media crawl");
+  this.entryManager.save();
+
   DirectoryImporter(directory, managed, cmd);
 
   function migrateEntry(old) {
