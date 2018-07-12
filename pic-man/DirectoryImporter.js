@@ -7,7 +7,6 @@ var mkdirp = require('mkdirp');
 var mv = require('mv')
 var onExit = require('on-exit');
 var processFileMetadata = require('./FileProcessor.js');
-var Promise = require("promise");
 
 const MEDIA = ["JPEG", "JPG", "TIFF", "GIF", "BMP", "PNG", "CR2", "AVI", "MOV", "WMV", "MP4", "MV4P", "MPG", "MPEG", "M4V"];
 
@@ -120,17 +119,6 @@ module.exports = function (directory, managed, cmd) {
 
         processNext(callback);
         
-    }
-
-    function reviewFile(file) {
-        var sha256Sum = sha256File(file);
-        var found = this.entryManager.addOrCreateEntry(sha256Sum);
-        this.entryManager.addPath(found, file);
-        addExtension(found, file);
-        addFileDate(found, file);
-        addFileDateFromExif(found, file);
-        copyIfRequired(found, file);
-        stats.injested++;
     }
 
     function injest(toInjest) {
