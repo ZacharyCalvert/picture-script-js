@@ -107,6 +107,9 @@ module.exports = function (directory, managed, cmd) {
                 this.processing = false;
             } else {
                 stats.injested++;
+                if (stats.injested % 100 == 0) {
+                    console.log("Processed %d media files, %d remaining", stats.injested, files.length);
+                }
                 copyIfRequired(result.entry, result.path);
                 processNext(this.callback);
             }

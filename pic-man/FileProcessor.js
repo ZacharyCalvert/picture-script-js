@@ -85,7 +85,7 @@ var processFile = function (entryManager, path, callback) {
           if (readExif) {
               var dates = [readExif["DateTimeOriginal"], readExif["DateTimeDigitized"], readExif["DateTime"], readExif["dateCreated"]];
               dates = dates.map(x => x ? new Date(Date.parse(x.split(' ').shift().replace(':', "-"))) : x);
-              writeEarliestFoundDate(this.entry, dates);
+              writeEarliestFoundDate(dates);
           }
           this.state |= EXIF_DONE;
           callbackIfDone();
