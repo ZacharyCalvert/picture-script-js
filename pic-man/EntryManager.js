@@ -18,8 +18,18 @@ function EntryManager(storagePath, stats) {
   }
 }
 
+EntryManager.prototype.getShaSums = function () {
+  // return this.data.map(x => x.sha256);
+  return Object.keys(this.data);
+}
+
 EntryManager.prototype.save = function () {
   fs.writeFileSync(this.storagepath, yaml.safeDump(this.data, {'schema': yaml.JSON_SCHEMA}), 'utf8');
+}
+
+EntryManager.prototype.find = function (sha256Sum) {
+  sha256Sum = sha256Sum.toUpperCase();
+  return this.data[sha256Sum];
 }
 
 EntryManager.prototype.addOrCreateEntry = function (sha256Sum) {

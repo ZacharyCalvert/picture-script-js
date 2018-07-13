@@ -1,7 +1,6 @@
 var fs = require ('fs');
 var EntryManager = require('./EntryManager.js')
 var path = require('path');
-var sha256File = require('sha256-file');
 var PathService = require('./PathService.js');
 var mkdirp = require('mkdirp');
 var mv = require('mv')
