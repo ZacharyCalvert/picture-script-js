@@ -4,6 +4,8 @@ var open = require("open");
 var fs = require ('fs');
 var EntryManager = require('../pic-man/EntryManager.js')
 
+var pathToApp = __dirname;
+
 var review = function(managed) {
 
   if (fs.existsSync(managed) && fs.existsSync(managed + "/pic-man.db")) {
@@ -25,7 +27,12 @@ var review = function(managed) {
 
   app.use('/media', express.static(managed));
 
-  app.listen(3000, () => open("http://localhost:3000/ids"));
+  app.use('/review/react', express.static(__dirname + '/public'))
+  app.get('/review', function(req, res) {
+    res.sendFile(pathToApp + '/static/index.html');
+  });
+
+  app.listen(3000, () => open("http://localhost:3000/review"));
 }
 
 module.exports = review;

@@ -4,7 +4,9 @@
   "description": "Javascript utilities for input and export of personal media including photos and videos.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "start": "node server.js",
+    "build": "webpack --progress"
   },
   "repository": {
     "type": "git",
@@ -26,6 +28,8 @@
     "med-man": "./med-man.js"
   },
   "dependencies": {
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-env": "^1.7.0",
     "commander": "^2.15.1",
     "create-file": "^1.0.1",
     "empty-dir": "^1.0.0",
@@ -35,10 +39,21 @@
     "mv": "^2.1.1",
     "on-exit": "^1.0.1",
     "open": "0.0.5",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0",
     "sha256-file": "^1.0.0",
     "write": "^1.0.3"
   },
   "devDependencies": {
-    "mocha": "^5.2.0"
+    "babel": "^6.23.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "mocha": "^5.2.0",
+    "webpack": "^4.16.0",
+    "webpack-cli": "^3.0.8"
   }
 }
