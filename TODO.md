@@ -1,9 +1,9 @@
+- tag support 
+- tag by folder match
 - migrate version (version, tags, media list)
 - human complete
-- tag support 
 - delete and ignore support
 - exclude by default support 
-- tag by folder match
 - export by tagged/exclude
 - slideshow
 - docs
