@@ -1,4 +1,5 @@
 const path = require('path')
+const webpack = require('webpack')
 const isDev = process.env.NODE_ENV === 'development'
 
 module.exports = {
@@ -11,10 +12,17 @@ module.exports = {
   devtool: 'source-map',
   module: {
     rules: [
-      { test: /\.css$/, use: 'css-loader' },
+      { test: /\.css$/, use: ['style-loader', 'css-loader']},
       { test: /\.js$/, use: 'babel-loader' }
     ]
   },
+  plugins: [
+     new webpack.ProvidePlugin({
+       '$': "jquery",
+       'jQuery': "jquery",
+       'Popper': 'popper.js'
+      })
+  ],
   devServer: {
     contentBase: path.join(__dirname, '/web-man/public'), // serve your static files from here
     watchContentBase: true, // initiate a page refresh if static content changes

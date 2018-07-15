@@ -1,7 +1,11 @@
+import 'jquery';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import React, { Component } from "react";
 
 import "./app.css";
 import Review from './Review.js';
+import Operations from './Operations.js';
 
 export default class App extends Component {
   constructor(props) {
@@ -17,12 +21,17 @@ export default class App extends Component {
 
   render() {
     return (
-      <div>
-        {this.state.shasums ? (
-          <Review ids={this.state.shasums} />
-        ) : (
-          <h1>Loading image IDs.. please wait!</h1>
-        )}
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
+          <Operations/>
+        </div>
+        <div class="col-sm-12 col-md-6">
+          {this.state.shasums ? (
+            <Review ids={this.state.shasums} />
+          ) : (
+            <h1>Loading image IDs.. please wait!</h1>
+          )}
+        </div>
       </div>
     );
   }

@@ -6,3 +6,8 @@ body {
   text-align: center;
   margin: auto;
 }
+
+* {
+  font-size: 12px;
+  line-height: 1.328;
+}

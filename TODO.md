@@ -1,8 +1,7 @@
-- UI rendering
 - order IDs by date 
 - next / back support 
-- bootstrap JS
 - migrate version (version, tags, media list)
+- human complete
 - tag support 
 - delete and ignore support
 - exclude by default support 
@@ -11,6 +10,7 @@
 - slideshow
 - docs
 - publish
+- youtube videos (howto)
 
 
 

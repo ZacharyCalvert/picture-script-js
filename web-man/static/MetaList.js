@@ -7,6 +7,7 @@ import React, { Component } from "react";
 "earliestDate":1529762242949,
 "storedAt":"C/2/C28C3EDC10494AD4A5E0D235240A51883B58E416F2724C74668A85A31AB79D19.PNG"}
 */
+import "./meta.css"
 
 export default class MetaList extends Component {
   constructor(props) {
