@@ -1,8 +1,16 @@
-- migrate (re-arrange)
-- tag management 
-- tag on import
-- test duplicates (path but cleanup)
-- sample export 
+- UI rendering
+- order IDs by date 
+- next / back support 
+- bootstrap JS
+- migrate version (version, tags, media list)
+- tag support 
+- delete and ignore support
+- exclude by default support 
+- tag by folder match
+- export by tagged/exclude
+- slideshow
+- docs
+- publish
 
 
 

@@ -1,14 +1,34 @@
+const path = require('path')
+const isDev = process.env.NODE_ENV === 'development'
+
 module.exports = {
+  mode: isDev ? 'development' : 'production',
   entry: './web-man/static/index.js',
-  mode: 'development',
   output: {
-    path: __dirname + '/web-man/public',
+    path: path.join(__dirname, '/web-man/public'),
     filename: 'bundle.js'
   },
+  devtool: 'source-map',
   module: {
     rules: [
       { test: /\.css$/, use: 'css-loader' },
       { test: /\.js$/, use: 'babel-loader' }
     ]
+  },
+  devServer: {
+    contentBase: path.join(__dirname, '/web-man/public'), // serve your static files from here
+    watchContentBase: true, // initiate a page refresh if static content changes
+    proxy: [ // allows redirect of requests to webpack-dev-server to another destination
+      {
+        context: ['/ids', '/media'],  // can have multiple
+        target: 'http://localhost:3000', // server and port to redirect to
+        secure: false,
+      },
+    ],
+    port: 3030, // port webpack-dev-server listens to, defaults to 8080
+    overlay: { // Shows a full-screen overlay in the browser when there are compiler errors or warnings
+      warnings: false, // defaults to false
+      errors: false, // defaults to false
+    },
   }
 };
