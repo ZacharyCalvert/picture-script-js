@@ -1,4 +1,3 @@
-- order IDs by date 
 - next / back support 
 - migrate version (version, tags, media list)
 - human complete

@@ -20,7 +20,12 @@ function EntryManager(storagePath, stats) {
 
 EntryManager.prototype.getShaSums = function () {
   // return this.data.map(x => x.sha256);
-  return Object.keys(this.data);
+  var entries = this.data;
+  var keyList = Object.keys(this.data);
+  keyList.sort((a, b) => {
+    entries[a].earliestDate - entries[b].earliestDate;
+  });
+  return keyList;
 }
 
 EntryManager.prototype.save = function () {
