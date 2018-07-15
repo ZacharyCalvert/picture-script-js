@@ -1,4 +1,3 @@
-- next / back support 
 - migrate version (version, tags, media list)
 - human complete
 - tag support 

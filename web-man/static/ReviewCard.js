@@ -5,14 +5,6 @@ import Media from './Media.js';
 
 var dateFormat = require('dateformat');
 
-/*
-{"sha256":"C28C3EDC10494AD4A5E0D235240A51883B58E416F2724C74668A85A31AB79D19",
-"paths":["/Users/Zach/Desktop/BdayPresent/Bobsburgerswithdog.png"],
-"extensions":["PNG"],
-"earliestDate":1529762242949,
-"storedAt":"C/2/C28C3EDC10494AD4A5E0D235240A51883B58E416F2724C74668A85A31AB79D19.PNG"}
-*/
-
 export default class ReviewCard extends Component {
   constructor(props) {
     super(props);
@@ -20,9 +12,19 @@ export default class ReviewCard extends Component {
   }
 
   componentDidMount() {
+    console.log("Fetching /ids/" + this.props.id)
     fetch("/ids/" + this.props.id)
       .then(res => res.json())
       .then(media => this.setState({ entry: media }));
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.id !== this.props.id) {
+      console.log("Fetching /ids/" + this.props.id)
+      fetch("/ids/" + this.props.id)
+        .then(res => res.json())
+        .then(media => this.setState({ entry: media }));
+    }
   }
 
   render() {
