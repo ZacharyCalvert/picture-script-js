@@ -17,8 +17,24 @@ var review = function(managed) {
 
   var manager = this.entryManager;
 
+  app.use(express.json());  
+
   app.get('/ids', function (req, res) { 
     res.send(manager.getShaSums());
+  });
+
+  app.get('/entry/tags', function(req, res) {
+    res.send(manager.getTags());
+  });
+
+  app.get('/entry/tags/:id', function(req, res) {
+    res.send(manager.getTags(req.params.id));
+  });
+
+  app.post('/entry/tags/:id', function(req, res) {
+    console.log(req.body);
+    manager.setTags(req.params.id, req.body);
+    res.sendStatus(204);
   });
 
   app.get('/ids/:id', function(req, res) {

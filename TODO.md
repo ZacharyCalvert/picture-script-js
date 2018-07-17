@@ -7,6 +7,7 @@
 - export by tagged/exclude
 - slideshow
 - docs
+- retag support (change tag a to tag b)
 - publish
 - youtube videos (howto)
 

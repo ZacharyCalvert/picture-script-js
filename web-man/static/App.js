@@ -40,9 +40,14 @@ export default class App extends Component {
   render() {
     return (
       <div class="row">
-        <div class="col-sm-12 col-md-6">
-          <Operations onNext={this.next} onPrevious={this.previous}/>
-        </div>
+
+        {this.state.shasums ? (
+          <div class="col-sm-12 col-md-6">
+            <Operations currentId={this.state.shasums[this.state.current]} onNext={this.next} onPrevious={this.previous}/>
+          </div>
+        ) : (
+          <div class="col-sm-12 col-md-6"/>
+        )}
         <div class="col-sm-12 col-md-6">
           {this.state.shasums ? (
             <Review currentId={this.state.current} ids={this.state.shasums} />

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import "./operations.css"
 
+import Tagging from "./Tagging.js"
+
 export default class Operations extends Component {
   constructor(props) {
     super(props);
@@ -27,7 +29,7 @@ export default class Operations extends Component {
       <div class="container">
         <div class="row">
           <div class="col-sm-12">
-            <p>Put  tag support here</p>
+            <Tagging onNext={clickNext} id={this.props.currentId}/>
           </div>
         </div>
         <div class="row">

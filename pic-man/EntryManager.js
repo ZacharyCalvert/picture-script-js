@@ -18,6 +18,34 @@ function EntryManager(storagePath, stats) {
   }
 }
 
+EntryManager.prototype.getTags = function(sha256Sum) {
+  console.info("Requesting tags of " + sha256Sum);
+  if (sha256Sum) {
+    var result = this.data[sha256Sum].tags;
+    if (result === undefined) {
+      result = [];
+    }
+    return result;
+  } else {
+    var allTags = new Set();
+    for (var key in this.data) {
+      var entry = this.data[key];
+      if (entry.tags) {
+        for (var tag in tags) {
+          allTags.add(tag);
+        }
+      }
+    }
+    return Array.from(allTags);
+  }
+}
+
+EntryManager.prototype.setTags = function(sha256Sum, tags) {
+  console.log("Setting %s tags", sha256Sum);
+  console.log(tags);
+  this.data[sha256Sum].tags = tags;
+}
+
 EntryManager.prototype.getShaSums = function () {
   // return this.data.map(x => x.sha256);
   var entries = this.data;

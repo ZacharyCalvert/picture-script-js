@@ -9,11 +9,11 @@ export default class App extends Component {
   }
 
   render() {
-    var progress = this.props.ids.length > 0 ? (this.props.currentId * 100.0 / this.props.ids.length) + "%" : "100%";
+    var progress = this.props.ids.length > 0 ? (this.props.currentId * 100.0 / this.props.ids.length).toFixed(1) + "%" : "100%";
     
     return (
       <div>
-        <p>On {this.props.currentId + 1} of {this.props.ids.length}, or {progress} -- {this.props.ids[this.props.currentId]}</p>
+        <p>On {this.props.currentId + 1} of {this.props.ids.length}, or {progress}</p>
         <ReviewCard id={this.props.ids[this.props.currentId]}/>
       </div>
     );

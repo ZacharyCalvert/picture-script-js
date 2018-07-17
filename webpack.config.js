@@ -28,7 +28,7 @@ module.exports = {
     watchContentBase: true, // initiate a page refresh if static content changes
     proxy: [ // allows redirect of requests to webpack-dev-server to another destination
       {
-        context: ['/ids', '/media'],  // can have multiple
+        context: ['/ids', '/media', '/entry'],  // can have multiple
         target: 'http://localhost:3000', // server and port to redirect to
         secure: false,
       },
