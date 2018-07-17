@@ -31,7 +31,6 @@ EntryManager.prototype.addTagByFilter = function (filter, tag) {
 }
 
 EntryManager.prototype.getTags = function(sha256Sum) {
-  console.info("Requesting tags of " + sha256Sum);
   if (sha256Sum) {
     var result = this.data[sha256Sum].tags;
     if (result === undefined) {
@@ -43,7 +42,7 @@ EntryManager.prototype.getTags = function(sha256Sum) {
     for (var key in this.data) {
       var entry = this.data[key];
       if (entry.tags) {
-        for (var tag in entry.tags) {
+        for (const tag of entry.tags) {
           allTags.add(tag);
         }
       }
@@ -53,8 +52,6 @@ EntryManager.prototype.getTags = function(sha256Sum) {
 }
 
 EntryManager.prototype.setTags = function(sha256Sum, tags) {
-  console.log("Setting %s tags", sha256Sum);
-  console.log(tags);
   this.data[sha256Sum].tags = tags;
 }
 

@@ -1,4 +1,3 @@
-- tag support 
 - tag by folder match
 - migrate version (version, tags, media list)
 - human complete

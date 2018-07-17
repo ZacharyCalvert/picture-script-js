@@ -40,16 +40,19 @@ program
   .command('tag <managed> <folder> <tag>')
   .option('-i, --insensitive', 'Case insensitive operation')
   .action(function(managed, folder, tag, cmd) {
+    var tagged = {count:0};
     var entryManager = loadEntryManager(managed);
     entryManager.addTagByFilter((entry) => {
       if (entry.paths) {
         for (const path of entry.paths) {
           if (cmd.insensitive) {
             if (path.toLowerCase().includes(folder.toLowerCase())) {
+              tagged.count++;
               return true;
             }
           } else {
             if (path.includes(folder)) {
+              tagged.count++;
               return true;
             }
           }
@@ -57,6 +60,8 @@ program
       }
       return false;
     }, tag);
+    entryManager.save();
+    console.log("%d files tagged with %s", tagged.count, tag);
   });
 
 
