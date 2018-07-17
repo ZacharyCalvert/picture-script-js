@@ -52,6 +52,7 @@ export default class Tagging extends Component {
     } else {
       array = [tag];
     }
+    console.log(array);
     return array;
   }
 
@@ -64,17 +65,17 @@ export default class Tagging extends Component {
   }
 
   saveTags() {
-    var activeTags = this.state.currentTags;
-    if (activeTags === undefined) {
-      activeTags = [];
+    var currentTags = this.state.currentTags;
+    if (currentTags === undefined) {
+      currentTags = [];
     }
-    console.log("Setting %s active tags: " + activeTags, this.props.id);
-    console.log("Body: " + JSON.stringify(activeTags));
+    console.log("Setting %s active tags: " + currentTags, this.props.id);
+    console.log("Body: " + JSON.stringify(currentTags));
     fetch("/entry/tags/" + this.props.id, {
       method: 'post',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify(activeTags)
-     }).then(res => this.reviewDone);
+      body: JSON.stringify(currentTags)
+     }).then(res => this.reviewDone());
   }
 
   loadCurrentId() {
@@ -83,7 +84,7 @@ export default class Tagging extends Component {
 
       fetch("/entry/tags/" + this.props.id)
         .then(res => res.json())
-        .then(tags => this.setState({ active: tags }));
+        .then(tags => this.setState({ currentTags: tags }));
     }
   }
 
@@ -93,9 +94,68 @@ export default class Tagging extends Component {
     }
   }
 
-  render() {
+  handleTagCheckboxChange(e) {
+    if (e.target.checked) {
+      this.addTag(e.target.value);
+    } else {
+      var currentTags = this.state.currentTags;
+      currentTags = currentTags.filter((val) => val !== e.target.value);
+      console.log(currentTags);
+      this.setState({currentTags: currentTags});
+    }
+  }
 
-    var saveTags = this.saveTags.bind(this);
+  renderActiveTags() {
+    if (this.state.currentTags) {
+      const tagBoxes = this.state.currentTags.map((tag) => 
+
+        <div class="row">
+          <div class="col-sm-1">
+              <input value={tag} type="checkbox" checked="true" onChange={this.handleTagCheckboxChange.bind(this)}/>
+          </div>
+          <div class="col-sm-11">
+            <label class="float-left">{tag}</label>
+          </div>
+        </div>
+      );
+      return (
+        <div class="container">{tagBoxes}</div>
+      )
+    } else {
+      return (<div class="row"/>)
+    }
+  }
+
+  renderInactiveTags() {
+    if (this.state.allTags) {
+
+      var toRender = this.state.allTags;
+      var currentTags = this.state.currentTags;
+      if (currentTags) {
+        toRender = toRender.filter((val) => !currentTags.includes(val));
+      }
+
+      var checked = false;
+      const tagBoxes = toRender.map((tag) => 
+
+        <div class="row">
+          <div class="col-sm-1">
+              <input value={tag} type="checkbox" checked={checked} onChange={this.handleTagCheckboxChange.bind(this)}/>
+          </div>
+          <div class="col-sm-11">
+            <label class="float-left">{tag}</label>
+          </div>
+        </div>
+      );
+      return (
+        <div class="container">{tagBoxes}</div>
+      )
+    } else {
+      return (<div class="row"/>)
+    }
+  }
+
+  render() {
 
     return (
 
@@ -106,7 +166,14 @@ export default class Tagging extends Component {
             <label>Add Tag: <input tabIndex="1" type="text" name="tagInput" onKeyPress={this.handleInputKeyPress.bind(this)} />
             </label>
             </div>
+          </div>
+        ) : (<p/>) }
 
+        {this.renderActiveTags()}
+        {this.renderInactiveTags()}
+        
+        {this.state.allTags ? (
+          <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12">
               <button onClick={this.saveTags.bind(this)} type="button" class="btn btn-primary">Complete Tagging</button>
             </div>

@@ -31,7 +31,7 @@ EntryManager.prototype.getTags = function(sha256Sum) {
     for (var key in this.data) {
       var entry = this.data[key];
       if (entry.tags) {
-        for (var tag in tags) {
+        for (var tag in entry.tags) {
           allTags.add(tag);
         }
       }
