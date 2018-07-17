@@ -5,6 +5,7 @@ var PicManInit = require('./pic-man/PicManInit.js')
 var DirectoryImporter = require('./pic-man/DirectoryImporter.js')
 var MigrateService = require('./pic-man/MigrateService.js')
 var WebReview = require('./web-man/WebReview.js')
+var loadEntryManager = require('./pic-man/EntryManager.js').loadEntryManager;
 
 
 program
@@ -34,5 +35,29 @@ program
     console.log("Reviewing managed at %s", managed);
     WebReview(managed);
   });
+
+program
+  .command('tag <managed> <folder> <tag>')
+  .option('-i, --insensitive', 'Case insensitive operation')
+  .action(function(managed, folder, tag, cmd) {
+    var entryManager = loadEntryManager(managed);
+    entryManager.addTagByFilter((entry) => {
+      if (entry.paths) {
+        for (const path of entry.paths) {
+          if (cmd.insensitive) {
+            if (path.toLowerCase().includes(folder.toLowerCase())) {
+              return true;
+            }
+          } else {
+            if (path.includes(folder)) {
+              return true;
+            }
+          }
+        }
+      }
+      return false;
+    }, tag);
+  });
+
 
 program.parse(process.argv);

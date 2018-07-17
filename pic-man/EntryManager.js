@@ -18,6 +18,18 @@ function EntryManager(storagePath, stats) {
   }
 }
 
+EntryManager.prototype.addTagByFilter = function (filter, tag) {
+  for (var key in this.data) {
+    if (filter(this.data[key])) {
+      var currentTags = this.getTags(key);
+      if (!currentTags.includes(tag)) {
+        currentTags.unshift(tag);
+        this.setTags(key, currentTags);
+      }
+    }
+  }
+}
+
 EntryManager.prototype.getTags = function(sha256Sum) {
   console.info("Requesting tags of " + sha256Sum);
   if (sha256Sum) {
@@ -105,4 +117,12 @@ EntryManager.prototype.addExtension = function(entry, extension) {
 module.exports = EntryManager
 module.exports.initDb = (path) => {
   fs.writeFileSync(path, yaml.safeDump({}, {'schema': yaml.JSON_SCHEMA}), 'utf8');
+}
+module.exports.loadEntryManager = (managed) => {
+  if (fs.existsSync(managed) && fs.existsSync(managed + "/pic-man.db")) {
+    return new EntryManager(managed + "/pic-man.db");
+  } else {
+      console.log("Managed folder '%s' is not initialized", managed);
+      throw managed + " folder is not initialized.";
+  }
 }
