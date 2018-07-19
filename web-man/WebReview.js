@@ -20,7 +20,7 @@ var review = function(managed) {
   app.use(express.json());  
 
   app.get('/ids', function (req, res) { 
-    res.send(manager.getShaSums());
+    res.send(manager.filterIds((entry) => !(entry.reviewDone === true)));
   });
 
   app.get('/entry/tags', function(req, res) {
