@@ -45,7 +45,16 @@ var review = function(managed) {
   });
 
   app.patch('/entry', function(req, res) {
-    // todo
+    if (req.body.folder && req.body.tag) {
+      // TODO -> this operation should emit an event and we should have 
+      // reactive websocket event presentation of changes to the currently viewed
+      // entry
+      var stats = manager.tagFolder(req.body.folder, req.body.tag);
+      console.log("Tagging folder %s with tag %s had %d matches", req.body.folder, req.body.tag, stats.tagsApplied);
+      res.status(200).send(stats);
+    } else {
+      res.sendStatus(400);
+    }
   });
 
   app.get('/ids/:id', function(req, res) {

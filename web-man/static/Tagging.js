@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import FolderOperations from "./FolderOperations.js"
 
 import "./operations.css"
 
@@ -187,12 +188,13 @@ export default class Tagging extends Component {
         ) : (
           <p>Loading tags</p>
         )}
-
-          <div class="row">
-            <div class="col-sm-12">
-              <p>&nbsp;</p>
-            </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <p>&nbsp;</p>
           </div>
+        </div>
+
+        <FolderOperations id={this.props.id} addTag={this.addTag.bind(this)} />
       </div>
     );
   }

@@ -28,6 +28,26 @@ EntryManager.prototype.filterIds = function(filter) {
   return result;
 }
 
+EntryManager.prototype.tagFolder = function (folder, tag) {
+  var meta = {tagsApplied: 0};
+  this.addTagByFilter((entry) => {
+    if (entry.paths) {
+      for (const path of entry.paths) {
+        var pathSplit = path.split('/');
+        pathSplit.pop();
+        for (var directory = pathSplit.pop(); directory; directory = pathSplit.pop()) {
+          if (directory === folder) {
+            meta.tagsApplied++;
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }, tag);
+  return meta;
+}
+
 EntryManager.prototype.setReviewDone = function(sha256Sum, done = true) {
   console.log("Setting %s review done status to " + done, sha256Sum);
   this.data[sha256Sum].reviewDone = done;

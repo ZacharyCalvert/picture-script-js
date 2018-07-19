@@ -1,5 +1,8 @@
-- tag by folder match in web
 - human complete
+- excludeFromExports individual file
+- excludeFromExports folder 
+- delete individual image
+- delete folder
 - delete and ignore support
 - exclude by default support 
 - export by tagged/exclude
