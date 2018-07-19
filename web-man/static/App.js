@@ -50,7 +50,7 @@ export default class App extends Component {
         )}
         <div class="col-sm-12 col-md-6">
           {this.state.shasums ? (
-            <Review currentId={this.state.current} ids={this.state.shasums} />
+            <Review currentId={this.state.current} ids={this.state.shasums} onNext={this.next} onPrevious={this.previous}/>
           ) : (
             <h1>Loading image IDs.. please wait!</h1>
           )}

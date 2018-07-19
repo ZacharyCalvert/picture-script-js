@@ -41,6 +41,12 @@ export default class Tagging extends Component {
   }
 
   reviewDone() {
+    var done = {reviewDone: true};
+    fetch("/entry/" + this.props.id, {
+      method: 'PATCH',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(done)
+     });
     this.props.onNext();
   }
 
@@ -175,7 +181,7 @@ export default class Tagging extends Component {
         {this.state.allTags ? (
           <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12">
-              <button onClick={this.saveTags.bind(this)} type="button" class="btn btn-primary">Complete Tagging</button>
+              <button onClick={this.saveTags.bind(this)} type="button" class="btn btn-primary">Done Tagging</button>
             </div>
           </div>
         ) : (

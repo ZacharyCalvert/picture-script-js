@@ -10,11 +10,25 @@ export default class App extends Component {
 
   render() {
     var progress = this.props.ids.length > 0 ? (this.props.currentId * 100.0 / this.props.ids.length).toFixed(1) + "%" : "100%";
-    
+
     return (
-      <div>
-        <p>On {this.props.currentId + 1} of {this.props.ids.length}, or {progress}</p>
-        <ReviewCard id={this.props.ids[this.props.currentId]}/>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6">
+            <button onClick={this.props.onPrevious} type="button" class="btn btn-primary">Previous</button>
+          </div>
+          <div class="col-sm-6">
+            <button onClick={this.props.onNext} type="button" class="btn btn-primary">Next</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <p>On {this.props.currentId + 1} of {this.props.ids.length}, or {progress}</p>
+          </div>
+          <div class="col-sm-12">
+            <ReviewCard id={this.props.ids[this.props.currentId]}/>
+          </div>
+        </div>
       </div>
     );
   }

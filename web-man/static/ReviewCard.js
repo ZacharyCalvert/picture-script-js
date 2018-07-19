@@ -28,6 +28,7 @@ export default class ReviewCard extends Component {
   }
 
   render() {
+
     const entry = this.state.entry;
     const dateStr = entry ? dateFormat(entry.earliestDate, "dddd, mmmm dS, yyyy, HH:MM") : undefined;
     return (

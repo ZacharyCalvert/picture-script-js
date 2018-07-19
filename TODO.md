@@ -1,5 +1,4 @@
-- tag by folder match
-- migrate version (version, tags, media list)
+- tag by folder match in web
 - human complete
 - delete and ignore support
 - exclude by default support 
@@ -9,6 +8,7 @@
 - retag support (change tag a to tag b)
 - publish
 - youtube videos (howto)
+- migrate version (version, tags, media list)
 
 
 

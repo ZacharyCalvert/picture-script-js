@@ -32,9 +32,20 @@ var review = function(managed) {
   });
 
   app.post('/entry/tags/:id', function(req, res) {
-    console.log(req.body);
     manager.setTags(req.params.id, req.body);
+    manager.save();
     res.sendStatus(204);
+  });
+
+  app.patch('/entry/:id', function(req, res) {
+    if (req.body.reviewDone !== undefined) {
+      manager.setReviewDone(req.params.id, req.body.reviewDone);
+    }
+    manager.save();
+  });
+
+  app.patch('/entry', function(req, res) {
+    // todo
   });
 
   app.get('/ids/:id', function(req, res) {

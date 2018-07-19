@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import "./operations.css"
 
 import Tagging from "./Tagging.js"
+import FolderOperations from "./FolderOperations.js"
 
 export default class Operations extends Component {
   constructor(props) {
@@ -32,14 +33,9 @@ export default class Operations extends Component {
             <Tagging onNext={clickNext} id={this.props.currentId}/>
           </div>
         </div>
-        <div class="row">
-          <div class="col-sm-6">
-            <button onClick={clickPrev} type="button" class="btn btn-primary">Previous</button>
-          </div>
-          <div class="col-sm-6">
-            <button onClick={clickNext} type="button" class="btn btn-primary">Next</button>
-          </div>
-        </div>
+
+        <FolderOperations id={this.props.currentId}/>
+        
       </div>
     );
   }
