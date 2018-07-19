@@ -18,6 +18,21 @@ function EntryManager(storagePath, stats) {
   }
 }
 
+EntryManager.prototype.filterIds = function(filter) {
+  var result = [];
+  for (var key in this.data) {
+    if (filter(this.data[key])) {
+      result.push(key);
+    }
+  }
+  return result;
+}
+
+EntryManager.prototype.setReviewDone = function(sha256Sum, done = true) {
+  console.log("Setting %s review done status to " + done, sha256Sum);
+  this.data[sha256Sum].reviewDone = done;
+}
+
 EntryManager.prototype.addTagByFilter = function (filter, tag) {
   for (var key in this.data) {
     if (filter(this.data[key])) {
