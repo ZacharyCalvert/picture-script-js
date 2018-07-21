@@ -1,8 +1,4 @@
-- excludeFromExports individual file
-- delete individual image
 - delete folder
-- delete and ignore support
-- exclude by default support 
 - export by tagged/exclude
 - export supports the -a flag or exclude flag
 - travis CI

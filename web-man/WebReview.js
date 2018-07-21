@@ -37,6 +37,12 @@ var review = function(managed) {
     res.sendStatus(204);
   });
 
+  app.delete('/entry/:id', function(req, res) {
+    manager.deleteAndIgnore(req.params.id);
+    manager.save();
+    res.sendStatus(204);
+  });
+
   app.patch('/entry/:id', function(req, res) {
     if (req.body.reviewDone !== undefined) {
       manager.setReviewDone(req.params.id, req.body.reviewDone);

@@ -42,6 +42,7 @@ module.exports = function (directory, managed, cmd) {
     function copyIfRequired(entry, path) {
         var skipCopy = command.nocopy ? true : false;
         skipCopy |= (entry.storedAt ? true : false);
+        skipCopy |= (entry.ignore ? true : false);
         
         // skip if either we have already stored it OR if we were informed no copy
         if (skipCopy) {

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import FolderOperations from "./FolderOperations.js"
+import DeleteMedia from "./DeleteMedia.js"
 
 import "./operations.css"
 
@@ -180,14 +181,19 @@ export default class Tagging extends Component {
         {this.renderInactiveTags()}
         
         {this.state.allTags ? (
-          <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-12">
-              <button onClick={this.saveTags.bind(this)} type="button" class="btn btn-primary">Done Tagging</button>
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-12 col-md-12 col-lg-12">
+                <button onClick={this.saveTags.bind(this)} type="button" class="btn btn-primary">Done Tagging</button>
+              </div>
             </div>
           </div>
         ) : (
           <p>Loading tags</p>
         )}
+
+        <DeleteMedia onNext={this.props.onNext} id={this.props.id}/>
+
         <div class="row">
           <div class="col-sm-12">
             <p>&nbsp;</p>

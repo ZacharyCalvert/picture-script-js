@@ -1,6 +1,7 @@
 var DateUtil = require('./DateUtil.js');
 var fs = require ('fs');
 var yaml = require('js-yaml');
+var PathService = require('./PathService.js');
 
 function EntryManager(storagePath, stats) {
 
@@ -131,6 +132,23 @@ EntryManager.prototype.addPath = function (entry, path) {
   } else {
       entry.paths = [path];
   }
+}
+
+EntryManager.prototype.deleteAndIgnore = function (sha256Sum) {
+  var entry = this.data[sha256Sum];
+  entry.ignore = true;
+  this.setReviewDone(sha256Sum, true);
+  var managedDirectory = this.storagepath.substring(0, this.storagepath.length - "/pic-man.db".length);
+  var toDelete = managedDirectory + this.data[sha256Sum].storedAt;
+
+  fs.unlink(toDelete, (err) => {
+    if (err) {
+      console.log("Failed to delete %s", toDelete);
+      console.error(err);
+      throw err;
+    }
+    console.log(toDelete + ' was deleted');
+  });
 }
 
 EntryManager.prototype.updateEarliestDate = function (entry, dates) {
