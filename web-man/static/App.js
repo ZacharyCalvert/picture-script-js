@@ -42,7 +42,7 @@ export default class App extends Component {
       <div class="row">
 
         {this.state.shasums ? (
-          <div class="col-sm-12 col-md-6">
+          <div class="col-sm-12 col-md-6 bot-buffer">
             <Operations currentId={this.state.shasums[this.state.current]} onNext={this.next} onPrevious={this.previous}/>
           </div>
         ) : (

@@ -1,20 +1,17 @@
-- human complete
 - excludeFromExports individual file
-- excludeFromExports folder 
 - delete individual image
 - delete folder
 - delete and ignore support
 - exclude by default support 
 - export by tagged/exclude
+- export supports the -a flag or exclude flag
+- travis CI
 - slideshow
 - docs
 - retag support (change tag a to tag b)
 - publish
 - youtube videos (howto)
 - migrate version (version, tags, media list)
-
-
-
 
 # Docs
 

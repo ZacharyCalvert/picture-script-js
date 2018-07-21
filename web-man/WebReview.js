@@ -40,6 +40,10 @@ var review = function(managed) {
   app.patch('/entry/:id', function(req, res) {
     if (req.body.reviewDone !== undefined) {
       manager.setReviewDone(req.params.id, req.body.reviewDone);
+      res.sendStatus(204);
+    } else if (req.body.excludeFromExport !== undefined) {
+      manager.setExcludFromExport(req.params.id, req.body.excludeFromExport);
+      res.sendStatus(204);
     }
     manager.save();
   });
@@ -51,6 +55,29 @@ var review = function(managed) {
       // entry
       var stats = manager.tagFolder(req.body.folder, req.body.tag);
       console.log("Tagging folder %s with tag %s had %d matches", req.body.folder, req.body.tag, stats.tagsApplied);
+      res.status(200).send(stats);
+    } else if (req.body.folder && req.body.excludeFromExport !== undefined) { 
+      var stats = {count: 0};
+      var folder = req.body.folder;
+      var filter = (entry) => {
+        if (entry.paths) {
+          for (const path of entry.paths) {
+            var pathSplit = path.split('/');
+            pathSplit.pop();
+            for (var directory = pathSplit.pop(); directory; directory = pathSplit.pop()) {
+              if (directory === folder) {
+                return true;
+              }
+            }
+          }
+        }
+        return false;
+      };
+
+      for (var id of manager.filterIds(filter)) {
+        manager.setExcludFromExport(id, req.body.excludeFromExport);
+        stats.count++;
+      }
       res.status(200).send(stats);
     } else {
       res.sendStatus(400);

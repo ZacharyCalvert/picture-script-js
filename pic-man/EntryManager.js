@@ -90,6 +90,11 @@ EntryManager.prototype.setTags = function(sha256Sum, tags) {
   this.data[sha256Sum].tags = tags;
 }
 
+EntryManager.prototype.setExcludFromExport = function(sha256Sum, excluded = true) {
+  console.log("Setting %s to " + (excluded ? "be " : "not be ") + "excluded from export.", sha256Sum);
+  this.data[sha256Sum].excludeFromExport = excluded;
+}
+
 EntryManager.prototype.getShaSums = function () {
   // return this.data.map(x => x.sha256);
   var entries = this.data;

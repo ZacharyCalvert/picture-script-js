@@ -1,25 +1,26 @@
 import React, { Component } from "react";
 
 import "./operations.css"
+import ExclusionOperations from "./ExclusionOperations";
 
 export default class FolderOperations extends Component {
   constructor(props) {
     super(props);
-    this.state = {folderTag:"", taggedByFolder:null, paths: null, folder: null};
+    this.state = {folderTag:"", entry: null, updatedCount:null, paths: null, folder: null};
   }
 
   componentDidMount() {
     fetch("/ids/" + this.props.id)
       .then(res => res.json())
-      .then(media => {this.setState({ paths: media.paths })});
+      .then(media => {this.setState({ entry: media, paths: media.paths })});
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.id !== this.props.id) {
-      this.setState({folder: null, taggedByFolder: null, folderTag: ""});
+      this.setState({folder: null, updatedCount: null, folderTag: ""});
       fetch("/ids/" + this.props.id)
         .then(res => res.json())
-        .then(media => {this.setState({ paths: media.paths })});
+        .then(media => {this.setState({ entry: media, paths: media.paths })});
     }
   }
 
@@ -39,16 +40,16 @@ export default class FolderOperations extends Component {
       body: JSON.stringify(tagRequest)
      })
      .then(res => res.json())
-     .then(meta => {this.setState({ taggedByFolder: meta.tagsApplied })});
+     .then(meta => {this.setState({ updatedCount: meta.tagsApplied })});
     this.props.addTag(this.state.folderTag);
   }
 
   renderTaggedFolderStats() {
-    if (this.state.taggedByFolder !== null) {
+    if (this.state.updatedCount !== null) {
       return (
         <div class="row">
           <div class="col-sm-12">
-            <p>{this.state.taggedByFolder} matches tagged</p>
+            <p>{this.state.updatedCount} matches updated.</p>
           </div>
         </div>
         )
@@ -155,12 +156,20 @@ export default class FolderOperations extends Component {
             &nbsp;
           </div>
         </div>
-        <div class="row">
-          <div class="col-sm-12 col-md-12 col-lg-12">
-            <button onClick={this.submitFolderTag.bind(this)} type="button" class="btn btn-primary">Tag Folder</button>
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+              <button onClick={this.submitFolderTag.bind(this)} type="button" class="btn btn-primary">Tag Folder</button>
+            </div>
           </div>
         </div>
         {this.renderTaggedFolderStats()}
+
+        {this.state.entry ?
+          <ExclusionOperations entry={this.state.entry} selectedFolder={this.state.folder}/>
+          : 
+          <div class="row"/>
+        }
       </div>
     );
   }
