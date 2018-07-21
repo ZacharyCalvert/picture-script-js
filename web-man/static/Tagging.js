@@ -60,7 +60,6 @@ export default class Tagging extends Component {
     } else {
       array = [tag];
     }
-    console.log(array);
     return array;
   }
 
@@ -108,7 +107,6 @@ export default class Tagging extends Component {
     } else {
       var currentTags = this.state.currentTags;
       currentTags = currentTags.filter((val) => val !== e.target.value);
-      console.log(currentTags);
       this.setState({currentTags: currentTags});
     }
   }
