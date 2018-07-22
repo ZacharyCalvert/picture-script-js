@@ -25,6 +25,23 @@ export default class Tagging extends Component {
   constructor(props) {
     super(props);
     this.state = {allTags: null, currentTags: null};
+
+    var globalEnter = {lastPress: 0};
+    var globalSave = function (e) {
+      if (e.key === 'Enter') {
+        var diff = new Date().getTime() - globalEnter.lastPress;
+        if (diff < 300) {
+          globalEnter.lastPress = 0;
+          this.saveTags();
+        } else {
+          globalEnter.lastPress = new Date().getTime();
+        }
+      } else {
+        globalEnter.lastPress = 0;
+      }
+    }
+    globalSave = globalSave.bind(this);
+    window.onkeypress = globalSave;
   }
 
   componentDidMount() {
