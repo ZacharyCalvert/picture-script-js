@@ -1,0 +1,19 @@
+.dropdown-menu-indexed {
+  z-index: 100000;
+  background-color: blue;
+}
+
+.menu-highlight {
+  opacity: 1;
+  background:lightgray;
+}
+
+.menu-active {
+  opacity: 1;
+  background:lightblue;
+}
+
+.menu-inactive {
+  opacity: 1;
+  background:white;
+}

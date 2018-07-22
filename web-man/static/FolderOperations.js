@@ -48,7 +48,7 @@ export default class FolderOperations extends Component {
     if (this.state.updatedCount !== null) {
       return (
         <div class="row">
-          <div class="col-sm-12">
+          <div class="col-12">
             <p>{this.state.updatedCount} matches updated.</p>
           </div>
         </div>
@@ -78,10 +78,10 @@ export default class FolderOperations extends Component {
         const radioOptions = folders.map((folder) => 
 
           <div class="row">
-            <div class="col-sm-6">
+            <div class="col-6">
                 <input class="float-right" value={folder} type="radio" checked={this.state.folder === folder}  onChange={this.handleRadioChange.bind(this)}/>
             </div>
-            <div class="col-sm-6">
+            <div class="col-6">
               <label class="float-left">{folder}</label>
             </div>
           </div>
@@ -90,10 +90,10 @@ export default class FolderOperations extends Component {
         return (
           <div class="container">
             <div class="row">
-              <div class="col-sm-6">
+              <div class="col-6">
                 <label class="float-right">Folder:</label>
               </div>
-              <div class="col-sm-6">
+              <div class="col-6">
                 <label class="float-left">{this.state.folder}</label>
               </div>
             </div>
@@ -103,10 +103,10 @@ export default class FolderOperations extends Component {
       } else {
         return (
           <div class="row">
-          <div class="col-sm-6">
+          <div class="col-6">
               <label class="float-right">Folder:</label>
           </div>
-            <div class="col-sm-6">
+            <div class="col-6">
               <label class="float-left">{this.state.folder}</label>
             </div>
           </div>
@@ -135,30 +135,30 @@ export default class FolderOperations extends Component {
     return (
       <div class="container">
         <div class="row">
-          <div class="col-sm-12">
+          <div class="col-12">
             <hr/>
           </div>
-          <div class="col-sm-12">
+          <div class="col-12">
             <h3>Folder Management</h3>
           </div>
         </div>
         {this.renderFolderOptions()}
         <div class="row">
-          <div class="col-sm-6">
+          <div class="col-6">
             <label class="float-right">Tag:</label>
           </div>
-          <div class="col-sm-6">
+          <div class="col-6">
             <input class="float-left" value={this.state.folderTag} type="text" name="tagFolder" onKeyPress={this.handleTagKeyPress.bind(this)} onChange={this.handleTagChange.bind(this)}/>
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-12">
+          <div class="col-12">
             &nbsp;
           </div>
         </div>
         <div class="container">
           <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-12">
+            <div class="col-12">
               <button onClick={this.submitFolderTag.bind(this)} type="button" class="btn btn-primary">Tag Folder</button>
             </div>
           </div>

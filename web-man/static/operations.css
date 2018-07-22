@@ -3,4 +3,20 @@ button {
   width: 100%;
 }
 
-.top-buffer { margin-top:20px; }
+.top-buffer {
+  margin-top:20px; 
+}
+
+.space-required {
+  margin-bottom: 20px;
+}
+
+.tag {
+  margin-top: 5px;
+  text-align: left;
+}
+
+.checkbox { 
+  margin-top: 2px;
+  margin-right: 3px;
+}

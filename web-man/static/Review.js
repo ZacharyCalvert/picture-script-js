@@ -14,18 +14,18 @@ export default class App extends Component {
     return (
       <div class="container">
         <div class="row">
-          <div class="col-sm-6">
+          <div class="col-6">
             <button onClick={this.props.onPrevious} type="button" class="btn btn-primary">Previous</button>
           </div>
-          <div class="col-sm-6">
+          <div class="col-6 col-6">
             <button onClick={this.props.onNext} type="button" class="btn btn-primary">Next</button>
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-12">
+          <div class="col-12">
             <p>On {this.props.currentId + 1} of {this.props.ids.length}, or {progress}</p>
           </div>
-          <div class="col-sm-12">
+          <div class="col-12">
             <ReviewCard id={this.props.ids[this.props.currentId]}/>
           </div>
         </div>

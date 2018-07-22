@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import FolderOperations from "./FolderOperations.js"
 import DeleteMedia from "./DeleteMedia.js"
+import TagSearch from "./TagSearch.js"
 
 import "./operations.css"
 
@@ -101,13 +102,17 @@ export default class Tagging extends Component {
     }
   }
 
+  removeTag(tag) {
+    var currentTags = this.state.currentTags;
+    currentTags = currentTags.filter((val) => val !== tag);
+    this.setState({currentTags: currentTags});
+  }
+
   handleTagCheckboxChange(e) {
     if (e.target.checked) {
       this.addTag(e.target.value);
     } else {
-      var currentTags = this.state.currentTags;
-      currentTags = currentTags.filter((val) => val !== e.target.value);
-      this.setState({currentTags: currentTags});
+      this.removeTag(e.target.value);
     }
   }
 
@@ -116,11 +121,9 @@ export default class Tagging extends Component {
       const tagBoxes = this.state.currentTags.map((tag) => 
 
         <div class="row">
-          <div class="col-sm-1">
-              <input value={tag} type="checkbox" checked="true" onChange={this.handleTagCheckboxChange.bind(this)}/>
-          </div>
-          <div class="col-sm-11">
-            <label class="float-left">{tag}</label>
+          <div class="col-sm-12 tag">
+            <input value={tag} class="checkbox float-left" type="checkbox" checked="true" onChange={this.handleTagCheckboxChange.bind(this)}/>
+            {tag}
           </div>
         </div>
       );
@@ -145,11 +148,9 @@ export default class Tagging extends Component {
       const tagBoxes = toRender.map((tag) => 
 
         <div class="row">
-          <div class="col-sm-1">
-              <input value={tag} type="checkbox" checked={checked} onChange={this.handleTagCheckboxChange.bind(this)}/>
-          </div>
-          <div class="col-sm-11">
-            <label class="float-left">{tag}</label>
+          <div class="col-sm-12 tag">
+            <input class="checkbox float-left" value={tag} type="checkbox" checked={checked} onChange={this.handleTagCheckboxChange.bind(this)}/>
+            {tag}
           </div>
         </div>
       );
@@ -168,9 +169,8 @@ export default class Tagging extends Component {
       <div class="container">
         {this.state.allTags ? (
           <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-12">
-            <label>Add Tag: <input tabIndex="1" type="text" name="tagInput" onKeyPress={this.handleInputKeyPress.bind(this)} />
-            </label>
+            <div class="col-sm-12 col-md-12 col-lg-12 space-required">
+              Add Tag: <TagSearch id={this.props.id} allTags={this.state.allTags} activeTags={this.state.currentTags} deactivateTag={this.removeTag.bind(this)} activateTag={this.addTag.bind(this)} />
             </div>
           </div>
         ) : (<p/>) }
@@ -181,7 +181,7 @@ export default class Tagging extends Component {
         {this.state.allTags ? (
           <div class="container">
             <div class="row">
-              <div class="col-sm-12 col-md-12 col-lg-12">
+              <div class="col-sm-12 col-md-12 col-lg-12 top-buffer">
                 <button onClick={this.saveTags.bind(this)} type="button" class="btn btn-primary">Done Tagging</button>
               </div>
             </div>

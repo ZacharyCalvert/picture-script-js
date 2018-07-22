@@ -1,3 +1,6 @@
+- search/add box
+- move array element used to top ? 
+- clear on add tag
 - delete folder
 - export by tagged/exclude
 - export supports the -a flag or exclude flag
