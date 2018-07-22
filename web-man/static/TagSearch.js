@@ -57,8 +57,10 @@ export default class TagSearch extends Component {
 
   selectFromSearch(value) {
     if (this.props.activeTags.includes(value)) {
+      console.log("deactivating tag " + value);
       this.props.deactivateTag(value);
     } else {
+      console.log("activating tag " + value);
       this.props.activateTag(value);
     }
     this.setState({searchText: ""});

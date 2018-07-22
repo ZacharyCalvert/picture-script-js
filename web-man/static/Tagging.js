@@ -167,33 +167,33 @@ export default class Tagging extends Component {
     return (
 
       <div class="container">
+        
+      {this.state.allTags ? (
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              <button onClick={this.saveTags.bind(this)} type="button" class="btn btn-primary">Done Tagging</button>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <p>Loading tags</p>
+      )}
+
         {this.state.allTags ? (
           <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-12 space-required">
-              Add Tag: <TagSearch id={this.props.id} allTags={this.state.allTags} activeTags={this.state.currentTags} deactivateTag={this.removeTag.bind(this)} activateTag={this.addTag.bind(this)} />
+            <div class="col-12 space-required top-buffer">
+              Add Tag: <TagSearch complete={this.saveTags.bind(this)} id={this.props.id} allTags={this.state.allTags} activeTags={this.state.currentTags} deactivateTag={this.removeTag.bind(this)} activateTag={this.addTag.bind(this)} />
             </div>
           </div>
         ) : (<p/>) }
 
         {this.renderActiveTags()}
-        {this.renderInactiveTags()}
-        
-        {this.state.allTags ? (
-          <div class="container">
-            <div class="row">
-              <div class="col-sm-12 col-md-12 col-lg-12 top-buffer">
-                <button onClick={this.saveTags.bind(this)} type="button" class="btn btn-primary">Done Tagging</button>
-              </div>
-            </div>
-          </div>
-        ) : (
-          <p>Loading tags</p>
-        )}
 
         <DeleteMedia onNext={this.props.onNext} id={this.props.id}/>
 
         <div class="row">
-          <div class="col-sm-12">
+          <div class="col-12">
             <p>&nbsp;</p>
           </div>
         </div>
