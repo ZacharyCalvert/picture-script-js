@@ -101,8 +101,9 @@ EntryManager.prototype.getShaSums = function () {
   var entries = this.data;
   var keyList = Object.keys(this.data);
   keyList.sort((a, b) => {
-    entries[a].earliestDate - entries[b].earliestDate;
+    return entries[a].earliestDate - entries[b].earliestDate;
   });
+
   return keyList;
 }
 
@@ -112,6 +113,10 @@ EntryManager.prototype.save = function () {
 
 EntryManager.prototype.find = function (sha256Sum) {
   sha256Sum = sha256Sum.toUpperCase();
+  return this.data[sha256Sum];
+}
+
+EntryManager.prototype.getEntry = function (sha256Sum) {
   return this.data[sha256Sum];
 }
 
