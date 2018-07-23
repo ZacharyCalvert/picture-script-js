@@ -29,7 +29,7 @@ DateUtil.prototype.getEarliestDate = function (dates) {
 
   if (Array.isArray(dates)) {
     for (var date of dates) {
-      if (!date) {
+      if (date === null || date === undefined) {
         continue;
       } else if (typeof date === 'object') {
         knownDates.unshift(date.getTime());
@@ -41,18 +41,19 @@ DateUtil.prototype.getEarliestDate = function (dates) {
     }
   } else if (typeof dates === 'number') {
     knownDates.unshift(dates);
-  } else if (typeof date === 'object') {
+  } else if (typeof dates === 'object') {
     knownDates.unshift(dates.getTime());
   } else if (typeof dates !== 'undefined') {
     throw 'Date is unexpected type of: ' + (typeof dates)
   }
 
-  knownDates = knownDates.filter(val => val && val > 0);
-  knownDates = knownDates.sort();
+  knownDates = knownDates.filter(val => (val && val > 0));
+  knownDates.sort(((a, b) => a - b));
+
   if (knownDates.length > 0) {
     this.current = knownDates[0];
   } else {
-    this.current = undefined;
+    this.current = 0;
   }
 
   return this.current;
