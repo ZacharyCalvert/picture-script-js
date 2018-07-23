@@ -9,8 +9,8 @@ export default class Media extends Component {
 
 
   render() {
-    var IMG_EXT = ["JPEG", "JPG", "TIFF", "GIF", "BMP", "PNG"];
-    const picture = IMG_EXT.includes(this.props.ext);
+    var IMG_EXT = ["JPEG", "JPG", "TIFF", "GIF", "BMP", "PNG", "CR2"];
+    const picture = IMG_EXT.includes(this.props.ext.toUpperCase());
     const path = "/media/" + this.props.path;
     return (
 
