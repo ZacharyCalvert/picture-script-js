@@ -41,6 +41,9 @@ export default class ReviewCard extends Component {
               Known file paths: 
               <MetaList name={"paths"} list={entry.paths} />
             </p>
+            <p class="text-left">
+              Sha256: {this.props.id}
+            </p>
           </div>
         ) : (
           <h1>Loading media..</h1>
