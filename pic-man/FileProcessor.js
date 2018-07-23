@@ -83,9 +83,10 @@ var processFile = function (entryManager, path, callback) {
           }
           var readExif = EXIF.readFromBinaryFile(ab);
           if (readExif) {
-              var dates = [readExif["DateTimeOriginal"], readExif["DateTimeDigitized"], readExif["DateTime"], readExif["dateCreated"]];
-              dates = dates.map(x => x ? new Date(Date.parse(x.split(' ').shift().replace(':', "-"))) : x);
-              writeEarliestFoundDate(dates);
+            var dates = [readExif["DateTimeOriginal"], readExif["DateTimeDigitized"], readExif["DateTime"], readExif["dateCreated"]];
+            dates = dates.filter((dateStr) => (dateStr && !dateStr.startsWith("0000:00:00")));  // bug in the exif code
+            dates = dates.map(x => x ? new Date(Date.parse(x.split(' ').shift().replace(':', "-"))) : x);
+            writeEarliestFoundDate(dates);
           }
           this.state |= EXIF_DONE;
           callbackIfDone();
