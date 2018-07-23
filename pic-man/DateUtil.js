@@ -21,23 +21,38 @@ DateUtil.prototype.update = function (numericalTime) {
 }
 
 DateUtil.prototype.getEarliestDate = function (dates) {
+  
+  var knownDates = [];
+  if (this.current && this.current > 0) {
+    knownDates.unshift(this.current);
+  }
+
   if (Array.isArray(dates)) {
-    var numerical = dates.map(function (date) {
-      if (typeof date === 'object') {
-        return date.getTime();
+    for (var date of dates) {
+      if (!date) {
+        continue;
+      } else if (typeof date === 'object') {
+        knownDates.unshift(date.getTime());
+      } else if (typeof date === 'number') {
+        knownDates.unshift(date);
       } else {
-        return date;
+        throw "unknown date type";
       }
-    });
-    for (const date of numerical) {
-      this.update(date);
     }
   } else if (typeof dates === 'number') {
-    this.update(dates);
-  } else if (typeof dates === 'object') {
-    this.update(dates.getTime());
+    knownDates.unshift(dates);
+  } else if (typeof date === 'object') {
+    knownDates.unshift(dates.getTime());
   } else if (typeof dates !== 'undefined') {
     throw 'Date is unexpected type of: ' + (typeof dates)
+  }
+
+  knownDates = knownDates.filter(val => val && val > 0);
+  knownDates = knownDates.sort();
+  if (knownDates.length > 0) {
+    this.current = knownDates[0];
+  } else {
+    this.current = undefined;
   }
 
   return this.current;
