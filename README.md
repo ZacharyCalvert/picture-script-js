@@ -1,4 +1,4 @@
-
+[![Build Status](https://travis-ci.org/ZacharyCalvert/picture-script-js.svg?branch=master)](https://travis-ci.org/ZacharyCalvert/picture-script-js)
 
 # Overview
 
