@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha",
     "start": "node server.js",
-    "build": "webpack --progress",
+    "build": "npm test & webpack --progress",
     "WDS": "npm test & webpack-dev-server --inline --hot"
   },
   "repository": {
