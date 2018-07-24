@@ -12,7 +12,7 @@ export default class FolderOperations extends Component {
   componentDidMount() {
     fetch("/ids/" + this.props.id)
       .then(res => res.json())
-      .then(media => {this.setState({ entry: media, paths: media.paths })});
+      .then(media => {this.setState({ folder:null, entry: media, paths: media.paths })});
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -20,7 +20,7 @@ export default class FolderOperations extends Component {
       this.setState({folder: null, updatedCount: null, folderTag: ""});
       fetch("/ids/" + this.props.id)
         .then(res => res.json())
-        .then(media => {this.setState({ entry: media, paths: media.paths })});
+        .then(media => {this.setState({ folder:null, entry: media, paths: media.paths })});
     }
   }
 
@@ -68,7 +68,6 @@ export default class FolderOperations extends Component {
         parentFolders.add(splitPath.pop());
       }
       var folders = Array.from(parentFolders);
-
 
       if (this.state.folder === null) {
         this.setState({folder: folders[0]});
@@ -118,20 +117,16 @@ export default class FolderOperations extends Component {
   }
 
   handleTagChange(e) {
-    console.log("upating state to be %s", e.target.value);
     this.setState({folderTag: e.target.value});
   }
 
   handleTagKeyPress(e) {
     if (e.key === 'Enter' && e.target.value) {
-      console.log("Submitting folder tag with %s folder and %s tag", this.state.folder, this.state.folderTag);
       this.submitFolderTag();
     }
   }
 
   render() {
-    console.log("Value of folder tag: " + this.state.folderTag);
-
     return (
       <div class="container">
         <div class="row">
