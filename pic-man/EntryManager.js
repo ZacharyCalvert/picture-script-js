@@ -101,7 +101,12 @@ EntryManager.prototype.getShaSums = function () {
   var entries = this.data;
   var keyList = Object.keys(this.data);
   keyList.sort((a, b) => {
-    return entries[a].earliestDate - entries[b].earliestDate;
+    var dateSort = entries[a].earliestDate - entries[b].earliestDate;
+    if (dateSort == 0) {
+      return entries[a].paths[0].localeCompare(entries[b].paths[0]);
+    } else {
+      return dateSort;
+    }
   });
 
   return keyList;

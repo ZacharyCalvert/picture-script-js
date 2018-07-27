@@ -30,6 +30,7 @@ med-man review /my/big/USB
 - Performance enhancements (pre-emptive loading during tagging)
 - Publish to NPM repo
 - TODO installation documentation
+- Test and use on Windows
 - Video issues in Chrome (.mov?)
 
 # Contributors
