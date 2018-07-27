@@ -2,12 +2,49 @@
 
 # Overview
 
-This utility is for locally managing pictures and videos, with services planned to assist in detecting and removing duplicates.
+This is a utility for managing local photos and movies for organizing home media.  It is targeted towards those of us that do not want to publish all of our photos and home video up to the web.
 
- _Why?_
-Non-cloud storage and management of photos and videos.  Really for those of us that don't want FaceBook to have every single photo we'll ever take.  Also for photos that you just don't want to go into the cloud.  
+# Target User/Consumer
 
-_Goals?_
+An engineer (npm user) interested in managing their local family photos and video.  
+
+# Installation
+
+- TODO
+
+# Usage
+
+Help is found via ```med-man -h``` but typically you will init a managed folder (where all of the pictures and video will be stored, then import various folders, then review the media for tagging and deletion, then you can use tha managed folder in the future to export organized content by tags or folder names.
+
+For example:
+```
+med-man init /my/big/USB
+med-man import ~/Desktop/photos
+med-man import ~/my/other/USB
+med-man import ~/Desktop/family
+med-man review /my/big/USB
+```
+
+# Remaining Todo 
+- Export functionality
+- Performance enhancements (pre-emptive loading during tagging)
+- Publish to NPM repo
+- TODO installation documentation
+- Video issues in Chrome (.mov?)
+
+# Contributors
+
+Zach Calvert - That's me.  Just a little warning, this is a pet project and fairly hack and slash.  If you're a recruiter/hiring manager, this is not my best work and I'm quite cabable of better tested, cleaner, well documented code.  This is not enterprise.
+
+# Technologies Applied
+
+- Express
+- ReactJS
+- ES6
+- Webpack + babel
+- Mocha
+
+# Goals
 - Support folder and file processing of images and video
 - Maintain an "earliest known date" so that you can find duplicate files but track what is the earliest record of that image/file
 - Support tagging through a localized browser interface
@@ -21,15 +58,3 @@ _Goals?_
 List of reference documentation consulted for preparing this utility suite:
 - <https://developer.atlassian.com/blog/2015/11/scripting-with-node/>
 
-# How to Use
-
-```
-npm install -g
-med-man -h
-```
-
-Start with ```med-man init <path to folder>``` where the path to folder is the folder you want to use to store all of your media files.  
-
-# What it does
-
-The managed directory you provide will become a directory storing all of the processed photos and videos and a metadata database in the top level directory.  Files will be renamed for fast lookup and indexing of ```<managed>/<first 3 digits of sha 256 sum>/<sha 256 sum>```.

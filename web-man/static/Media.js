@@ -18,7 +18,9 @@ export default class Media extends Component {
         {picture ? (
           <img src ={path} />
         ) : (
-          <h1>it's a movie...</h1>
+          <video width="320" height="240" controls>
+            <source src={path}/>
+          </video>
         )}
       </div>
     );
