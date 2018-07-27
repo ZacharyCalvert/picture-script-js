@@ -12,7 +12,7 @@ export default class App extends Component {
     var progress = this.props.ids.length > 0 ? (this.props.currentId * 100.0 / this.props.ids.length).toFixed(1) + "%" : "100%";
 
     return (
-      <div class="container">
+      <div class="container" style={{display: this.props.hide ? 'none' : 'block' }}>
         <div class="row">
           <div class="col-6">
             <button onClick={this.props.onPrevious} type="button" class="btn btn-primary">Previous</button>

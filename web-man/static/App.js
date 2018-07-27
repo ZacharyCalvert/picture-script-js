@@ -38,6 +38,15 @@ export default class App extends Component {
   }
 
   render() {
+
+    var preEmpt = 0;
+    
+    if (this.state.shasums) {
+      preEmpt = this.state.current + 1;
+      preEmpt = preEmpt > this.state.shasums.length - 1 ? 0 : preEmpt;
+    }
+
+
     return (
       <div class="row">
 
@@ -48,13 +57,16 @@ export default class App extends Component {
         ) : (
           <div class="col-sm-12 col-md-6"/>
         )}
-        <div class="col-sm-12 col-md-6">
           {this.state.shasums ? (
-            <Review currentId={this.state.current} ids={this.state.shasums} onNext={this.next} onPrevious={this.previous}/>
-          ) : (
-            <h1>Loading image IDs.. please wait!</h1>
-          )}
+        <div class="col-sm-12 col-md-6">
+          <Review currentId={this.state.current} ids={this.state.shasums} onNext={this.next} onPrevious={this.previous}/>
+          <Review hide={true} currentId={preEmpt} ids={this.state.shasums} onNext={this.next} onPrevious={this.previous}/>
         </div>
+          ) : (
+        <div class="col-sm-12 col-md-6">
+          <h1>Loading image IDs.. please wait!</h1>
+        </div>
+          )}
       </div>
     );
   }

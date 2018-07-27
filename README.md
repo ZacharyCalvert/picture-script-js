@@ -26,12 +26,21 @@ med-man review /my/big/USB
 ```
 
 # Remaining Todo 
+- publish
+- travis ci auto publish
+- List Tags (sorted)
 - Export functionality
-- Performance enhancements (pre-emptive loading during tagging)
+- Wire tag search for folder management
 - Publish to NPM repo
 - TODO installation documentation
 - Test and use on Windows
-- Video issues in Chrome (.mov?)
+- export by tagged/exclude
+- export supports the -a flag or exclude flag
+- slideshow
+- docs
+- retag support (change tag a to tag b)
+- youtube videos (howto)
+- migrate version (version, tags, media list)
 
 # Contributors
 
