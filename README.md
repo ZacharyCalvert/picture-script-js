@@ -76,6 +76,14 @@ npm link
 med-man -h
 ```
 
+# Release Execution
+
+Travis CLI will execute npm publish on repository tags.  To run a patch release, run 
+```
+npm run rel
+```
+which will build, test, patch bump, tag git repo, and push the tag to github.
+
 # Links/References
 
 List of reference documentation consulted for preparing this utility suite:
