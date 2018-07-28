@@ -8,6 +8,19 @@ var pathToApp = __dirname;
 
 var review = function(managed) {
 
+  var saveStatus = {needTo: false, active: false};
+
+  function saveState() {
+    if (saveStatus.needTo) {
+      saveStatus.active = true;
+      saveStatus.needTo = false;
+
+      manager.save();
+      console.log("State saved");
+      saveStatus.active = false;
+    }
+  }
+
   if (fs.existsSync(managed) && fs.existsSync(managed + "/pic-man.db")) {
     this.entryManager = new EntryManager(managed + "/pic-man.db");
   } else {
@@ -38,13 +51,15 @@ var review = function(managed) {
 
   app.post('/entry/tags/:id', function(req, res) {
     manager.setTags(req.params.id, req.body);
-    manager.save();
+    saveStatus.needTo = true;
+    setTimeout(saveState, 10000);
     res.sendStatus(204);
   });
 
   app.delete('/entry/:id', function(req, res) {
     manager.deleteAndIgnore(req.params.id);
-    manager.save();
+    saveStatus.needTo = true;
+    setTimeout(saveState, 10000);
     res.sendStatus(204);
   });
 
@@ -56,7 +71,8 @@ var review = function(managed) {
       manager.setExcludFromExport(req.params.id, req.body.excludeFromExport);
       res.sendStatus(204);
     }
-    manager.save();
+    saveStatus.needTo = true;
+    setTimeout(saveState, 10000);
   });
 
   app.patch('/entry', function(req, res) {

@@ -8,7 +8,7 @@
     "start": "node server.js",
     "build": "npm test & webpack --progress",
     "WDS": "npm test & webpack-dev-server --inline --hot",
-    "rel": "npm test && npm version patch -m \"Patch bump to %s\" && git push --tags"
+    "rel": "npm test && npm version patch -m \"Patch bump to %s\" && git push --tags && git push origin master"
   },
   "repository": {
     "type": "git",
