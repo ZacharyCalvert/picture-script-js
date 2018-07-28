@@ -28,6 +28,15 @@ program
   .action(function(dir, managed, cmd) {
     MigrateService(dir, managed, cmd);
   });  
+
+program
+  .command('tags <managed>')
+  .action(function(managed, cmd) {
+    var entryManager = loadEntryManager(managed);
+    for (var tag of entryManager.getTags().sort()) {
+      console.log("   %s", tag);
+    }
+  });
   
 program
   .command('review <managed>')

@@ -12,7 +12,9 @@ An engineer (npm user) interested in managing their local family photos and vide
 
 # Installation
 
-- TODO
+```
+npm install -g media-cli
+```
 
 # Usage
 
@@ -28,19 +30,14 @@ med-cli review /my/big/USB
 ```
 
 # Remaining Todo 
-- List Tags (sorted)
-- Export functionality
+- Export functionality via tags, include, exclude, --all
 - Wire tag search for folder management
-- Publish to NPM repo
-- TODO installation documentation
 - Test and use on Windows
-- export by tagged/exclude
 - export supports the -a flag or exclude flag
 - slideshow
 - docs
 - retag support (change tag a to tag b)
 - youtube videos (howto)
-- migrate version (version, tags, media list)
 
 # Contributors
 

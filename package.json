@@ -28,6 +28,7 @@
   "homepage": "https://github.com/ZacharyCalvert/picture-script-js#readme",
   "bin": {
     "med-man": "./med-man.js",
+    "media-cli": "./med-man.js",
     "med-cli": "./med-man.js"
   },
   "dependencies": {
