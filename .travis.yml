@@ -2,6 +2,9 @@ language: node_js
 node_js:
   - "10"
 
+before_install:
+  - echo "//registry.npmjs.org/:_authToken=\${API_TOKEN}" > .npmrc
+
 jobs:
   include:
     - stage: install 
@@ -10,11 +13,7 @@ jobs:
       script: "npm run build"
     - stage: release
       node_js: "10"
-      script: "Deploying to npm ..."
-      deploy:
-        provider: npm
-        api_key: $API_KEY
-        on deploy-npm-release
+      script: "npm publish"
 
 notifications:
   email:
