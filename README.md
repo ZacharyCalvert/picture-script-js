@@ -16,7 +16,7 @@ An engineer (npm user) interested in managing their local family photos and vide
 
 # Usage
 
-Help is found via ```med-cli -h``` but typically you will init a managed folder (where all of the pictures and video will be stored, then import various folders, then review the media for tagging and deletion, then you can use tha managed folder in the future to export organized content by tags or folder names.
+Help is found via ```med-cli -h``` but typically you will init a managed folder (where all of the pictures and video will be stored), then import various folders, then review the media for tagging and deletion, then you can use tha managed folder in the future to export organized content by tags or folder names.
 
 For example:
 ```
