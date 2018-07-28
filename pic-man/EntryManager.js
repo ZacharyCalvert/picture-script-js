@@ -145,9 +145,10 @@ EntryManager.prototype.addPath = function (entry, path) {
 }
 
 EntryManager.prototype.deleteAndIgnore = function (sha256Sum) {
-  var entry = this.data[sha256Sum];
-  entry.ignore = true;
-  this.setReviewDone(sha256Sum, true);
+  console.log("Setting %s review done status and ignore on future to " + true, sha256Sum);
+  this.data[sha256Sum].reviewDone = true;
+  this.data[sha256Sum].ignore = true;
+
   var managedDirectory = this.storagepath.substring(0, this.storagepath.length - "/pic-man.db".length);
   var toDelete = managedDirectory + this.data[sha256Sum].storedAt;
 

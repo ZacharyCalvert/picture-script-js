@@ -30,6 +30,8 @@ med-cli review /my/big/USB
 ```
 
 # Remaining Todo 
+- Check at end of import
+- Recover if file not at expected location on import
 - Export functionality via tags, include, exclude, --all
 - Wire tag search for folder management
 - Test and use on Windows

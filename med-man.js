@@ -3,6 +3,7 @@
 var program = require('commander');
 var PicManInit = require('./pic-man/PicManInit.js')
 var DirectoryImporter = require('./pic-man/DirectoryImporter.js')
+var Check = require('./pic-man/CheckEntry.js')
 var MigrateService = require('./pic-man/MigrateService.js')
 var WebReview = require('./web-man/WebReview.js')
 var loadEntryManager = require('./pic-man/EntryManager.js').loadEntryManager;
@@ -44,6 +45,13 @@ program
     console.log("Reviewing managed at %s", managed);
     WebReview(managed);
   });
+
+program
+  .command('check <managed>')
+  .action(function(managed, cmd) {
+    console.log("Checking managed at %s", managed);
+    new Check(managed).runCheck();
+});
 
 program
   .command('tag <managed> <folder> <tag>')
