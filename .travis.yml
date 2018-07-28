@@ -5,15 +5,17 @@ node_js:
 before_install:
   - echo "//registry.npmjs.org/:_authToken=\${API_TOKEN}" > .npmrc
 
+deploy:
+  provider: script
+  script: "npm publish"
+  skip_cleanup: true
+  on:
+    tags: true
+
 jobs:
   include:
-    - stage: install 
-      script: "npm install"
     - stage: test
       script: "npm run build"
-    - stage: release
-      node_js: "10"
-      script: "npm publish"
 
 notifications:
   email:
