@@ -1,6 +1,8 @@
 [![Build Status](https://travis-ci.org/ZacharyCalvert/picture-script-js.svg?branch=master)](https://travis-ci.org/ZacharyCalvert/picture-script-js)
 
-# Overview
+ _*This package is a pre-release and is still under heavy development*_
+
+# Media Command-Line-Interface (med-cli)  Overview
 
 This is a utility for managing local photos and movies for organizing home media.  It is targeted towards those of us that do not want to publish all of our photos and home video up to the web.
 
@@ -14,15 +16,15 @@ An engineer (npm user) interested in managing their local family photos and vide
 
 # Usage
 
-Help is found via ```med-man -h``` but typically you will init a managed folder (where all of the pictures and video will be stored, then import various folders, then review the media for tagging and deletion, then you can use tha managed folder in the future to export organized content by tags or folder names.
+Help is found via ```med-cli -h``` but typically you will init a managed folder (where all of the pictures and video will be stored, then import various folders, then review the media for tagging and deletion, then you can use tha managed folder in the future to export organized content by tags or folder names.
 
 For example:
 ```
-med-man init /my/big/USB
-med-man import ~/Desktop/photos
-med-man import ~/my/other/USB
-med-man import ~/Desktop/family
-med-man review /my/big/USB
+med-cli init /my/big/USB
+med-cli import ~/Desktop/photos
+med-cli import ~/my/other/USB
+med-cli import ~/Desktop/family
+med-cli review /my/big/USB
 ```
 
 # Remaining Todo 
@@ -62,6 +64,17 @@ Zach Calvert - That's me.  Just a little warning, this is a pet project and fair
 - Automated tagging when inputting a folder
 - Potentially facial recognition (depending on availability of non-cloud upload recognition)
 - Eventually attempt to automate picture duplication detection including image rotations and format changes
+
+# Local Development
+
+```
+git clone git@github.com:ZacharyCalvert/picture-script-js.git
+cd ./picture-script-js
+npm run build
+npm install -g
+npm link
+med-man -h
+```
 
 # Links/References
 

@@ -1,5 +1,5 @@
 {
-  "name": "med-man",
+  "name": "med-cli",
   "version": "0.0.1",
   "description": "Javascript utilities for input and export of personal media including photos and videos.",
   "main": "index.js",
@@ -26,7 +26,8 @@
   },
   "homepage": "https://github.com/ZacharyCalvert/picture-script-js#readme",
   "bin": {
-    "med-man": "./med-man.js"
+    "med-man": "./med-man.js",
+    "med-cli": "./med-man.js"
   },
   "dependencies": {
     "babel-plugin-transform-class-properties": "^6.24.1",
