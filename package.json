@@ -1,6 +1,6 @@
 {
   "name": "media-cli",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Javascript utilities for input and export of personal media including photos and videos.",
   "main": "index.js",
   "scripts": {

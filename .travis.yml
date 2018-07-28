@@ -1,7 +1,30 @@
 language: node_js
 node_js:
   - "10"
-install:
-  - npm install
-script:
-  - npm run build
+
+stages:
+  - name: release
+    if: branch = master
+
+jobs:
+  include:
+    - stage: install 
+      script: npm install
+    - stage: test
+      script: npm run build
+    - stage: release
+      node_js: "10"
+      script: "Deploying to npm ..."
+      deploy:
+        provider: npm
+        api_key: $API_KEY
+        on deploy-npm-release
+    - state: bump
+      script: npm version patch -m "Automated version bump %s"
+
+notifications:
+  email:
+    recipients:
+    - zachcalvert+travisci-npm@gmail.com
+    on_success: change
+    on_failure: always
