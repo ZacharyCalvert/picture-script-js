@@ -28,8 +28,6 @@ med-cli review /my/big/USB
 ```
 
 # Remaining Todo 
-- publish
-- travis ci auto publish
 - List Tags (sorted)
 - Export functionality
 - Wire tag search for folder management
