@@ -8,6 +8,13 @@ jobs:
       script: "npm install"
     - stage: test
       script: "npm run build"
+    - stage: release
+      node_js: "10"
+      script: "Deploying to npm ..."
+      deploy:
+        provider: npm
+        api_key: $API_KEY
+        on deploy-npm-release
 
 notifications:
   email:
