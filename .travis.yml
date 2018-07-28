@@ -3,7 +3,7 @@ node_js:
   - "10"
 
 before_install:
-  - echo "//registry.npmjs.org/:_authToken=\${API_TOKEN}" > .npmrc
+  - echo "//registry.npmjs.org/:_authToken=\${API_TOKEN}" > $HOME/.npmrc
 
 deploy:
   provider: script
