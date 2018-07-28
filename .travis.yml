@@ -12,10 +12,8 @@ deploy:
   on:
     tags: true
 
-jobs:
-  include:
-    - stage: test
-      script: "npm run build"
+script:
+  - npm run build
 
 notifications:
   email:
