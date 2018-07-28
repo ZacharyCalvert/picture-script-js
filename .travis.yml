@@ -5,18 +5,9 @@ node_js:
 jobs:
   include:
     - stage: install 
-      script: npm install
+      script: "npm install"
     - stage: test
-      script: npm run build
-    - stage: release
-      node_js: "10"
-      script: "Deploying to npm ..."
-      deploy:
-        provider: npm
-        api_key: $API_KEY
-        on deploy-npm-release
-    - state: bump
-      script: npm version patch -m "Automated version bump %s"
+      script: "npm run build"
 
 notifications:
   email:
