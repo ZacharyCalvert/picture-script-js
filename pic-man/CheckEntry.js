@@ -32,7 +32,12 @@ Check.prototype.runCheck = function () {
   console.log("Reviewed:        %d", stats.reviewed);
   console.log("Healthy IDs:     %d", stats.healthy);
   console.log("Deleted/ignored: %d", stats.ignored);
-  console.log("Broken links:    %d", stats.notFound);
+
+  if (stats.notFound > 0) {
+    console.log("\x1b[31m%s\x1b[0m", "Broken links:    " + stats.notFound);
+  } else {
+    console.log("Broken links:    %d", stats.notFound);
+  }
 
   return stats;
 }

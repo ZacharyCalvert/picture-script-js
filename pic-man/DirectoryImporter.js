@@ -6,6 +6,7 @@ var mkdirp = require('mkdirp');
 var mv = require('mv')
 var onExit = require('on-exit');
 var processFileMetadata = require('./FileProcessor.js');
+var Check = require('./CheckEntry')
 
 const MEDIA = ["JPEG", "JPG", "TIFF", "GIF", "BMP", "PNG", "CR2", "AVI", "MOV", "WMV", "MP4", "MV4P", "MPG", "MPEG", "M4V"];
 
@@ -26,6 +27,8 @@ module.exports = function (directory, managed, cmd) {
         if (this.entryManager) {
             this.entryManager.save();
         }
+
+        new Check(managedDirectory).runCheck();
     }
     exitFunction = exitFunction.bind(this);
 
