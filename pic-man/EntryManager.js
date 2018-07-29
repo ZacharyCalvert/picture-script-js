@@ -153,14 +153,16 @@ EntryManager.prototype.deleteAndIgnore = function (sha256Sum) {
   var toDelete = managedDirectory + this.data[sha256Sum].storedAt;
   delete this.data[sha256Sum].storedAt;
 
-  fs.unlink(toDelete, (err) => {
-    if (err) {
-      console.log("Failed to delete %s", toDelete);
-      console.error(err);
-      throw err;
-    }
-    console.log(toDelete + ' was deleted');
-  });
+  if (fs.existsSync(toDelete)) {
+    fs.unlink(toDelete, (err) => {
+      if (err) {
+        console.log("Failed to delete %s", toDelete);
+        console.error(err);
+        throw err;
+      }
+      console.log(toDelete + ' was deleted');
+    });
+  }
 }
 
 EntryManager.prototype.updateEarliestDate = function (entry, dates) {

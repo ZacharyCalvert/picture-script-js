@@ -35,7 +35,7 @@ var review = function(managed) {
   app.get('/ids', function (req, res) { 
     var forReview = manager.getShaSums();
     forReview = forReview.filter((sha) => {
-      return !manager.getEntry(sha).reviewDone;
+      return !manager.getEntry(sha).reviewDone && !manager.getEntry(sha).ignore;
     });
 
     res.status(200).send(forReview);
