@@ -13,17 +13,24 @@ const MEDIA = ["JPEG", "JPG", "TIFF", "GIF", "BMP", "PNG", "CR2", "AVI", "MOV", 
 module.exports = function (directory, managed, cmd) {
 
     var command = cmd;
-    var stats = {errors:0, newsha:0, injested:0, copied:0, mediaFiles:0};
+    var stats = {errors:0, newsha:0, injested:0, copied:0, mediaFiles:0, repaired: 0};
     var managedDirectory = managed;
     var files = [];
     var processing = false;
 
     var exitFunction = function () {
-        console.log("Errors encountered: %d", stats.errors);
         console.log("New media files: %d", stats.newsha);
         console.log("Total files processed: %d", stats.injested);
         console.log("Files copied: %d", stats.copied);
         console.log("Media files discovered: %d", stats.mediaFiles);
+        if (stats.errors > 0) {
+            console.log("\x1b[31m%s\x1b[0m", "Errors encountered: " + stats.errors);
+        } else {
+            console.log("Errors encountered: %d", stats.errors);
+        }
+        if (stats.repaired > 0) {
+            console.log("\x1b[32m%s\x1b[0m", "Successful repairs: " + stats.repaired);
+        }
         if (this.entryManager) {
             this.entryManager.save();
         }
@@ -44,7 +51,6 @@ module.exports = function (directory, managed, cmd) {
 
     function copyIfRequired(entry, path) {
         var skipCopy = command.nocopy ? true : false;
-        skipCopy |= (entry.storedAt ? true : false);
         skipCopy |= (entry.ignore ? true : false);
         
         // skip if either we have already stored it OR if we were informed no copy
@@ -53,6 +59,16 @@ module.exports = function (directory, managed, cmd) {
         }
         
         var pathService = new PathService(entry.sha256, getFileExtension(path), managedDirectory);
+
+        var isRepair = false;
+        if (entry.storedAt) {
+            if (!fs.existsSync(managed + entry.storedAt)) {
+                isRepair = true;
+            } else {
+                // copy not needed
+                return;
+            }
+        }
 
         mkdirp(pathService.getActualDirectory(), function (err) {
             if (err) {
@@ -67,6 +83,9 @@ module.exports = function (directory, managed, cmd) {
                     } else {
                         entry.storedAt = pathService.getRelative();
                         stats.copied++;
+                        if (isRepair) {
+                            stats.repaired++;
+                        }
                     }
                 }
                 if (command.move) {
