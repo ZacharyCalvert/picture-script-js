@@ -116,6 +116,10 @@ EntryManager.prototype.save = function () {
   fs.writeFileSync(this.storagepath, yaml.safeDump(this.data, {'schema': yaml.JSON_SCHEMA}), 'utf8');
 }
 
+EntryManager.prototype.saveAsync = function (callback) {
+  fs.writeFile(this.storagepath, yaml.safeDump(this.data, {'schema': yaml.JSON_SCHEMA}), 'utf8', callback);
+}
+
 EntryManager.prototype.find = function (sha256Sum) {
   sha256Sum = sha256Sum.toUpperCase();
   return this.data[sha256Sum];

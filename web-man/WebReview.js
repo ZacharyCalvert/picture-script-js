@@ -11,13 +11,20 @@ var review = function(managed) {
   var saveStatus = {needTo: false, active: false};
 
   function saveState() {
-    if (saveStatus.needTo) {
+    if (saveStatus.needTo && !saveStatus.active) {
       saveStatus.active = true;
       saveStatus.needTo = false;
 
-      manager.save();
-      console.log("State saved");
-      saveStatus.active = false;
+      manager.saveAsync((err) => {
+        if (err) {
+          console.log("Failed to delete %s", toDelete);
+          console.error(err);
+          throw err;
+        } else {
+          console.log("State saved");
+          saveStatus.active = false;
+        }
+      });
     }
   }
 
