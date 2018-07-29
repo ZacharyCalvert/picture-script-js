@@ -151,7 +151,7 @@ EntryManager.prototype.deleteAndIgnore = function (sha256Sum) {
 
   var managedDirectory = this.storagepath.substring(0, this.storagepath.length - "/pic-man.db".length);
   var toDelete = managedDirectory + this.data[sha256Sum].storedAt;
-  this.data[sha256Sum].storedAt = null;
+  delete this.data[sha256Sum].storedAt;
 
   fs.unlink(toDelete, (err) => {
     if (err) {

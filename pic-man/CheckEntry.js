@@ -17,7 +17,7 @@ Check.prototype.runCheck = function () {
       stats.reviewed++;
     }
 
-    if (entry.ignored) {
+    if (entry.ignore) {
       stats.ignored = stats.ignored +1;
     } else if (fs.existsSync(file)) {
       stats.healthy++;
