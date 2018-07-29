@@ -2,11 +2,12 @@ import React, { Component } from "react";
 
 import "./operations.css"
 import ExclusionOperations from "./ExclusionOperations";
+import TagSearch from "./TagSearch.js"
 
 export default class FolderOperations extends Component {
   constructor(props) {
     super(props);
-    this.state = {folderTag:"", entry: null, updatedCount:null, paths: null, folder: null};
+    this.state = {entry: null, updatedCount:null, paths: null, folder: null};
   }
 
   componentDidMount() {
@@ -17,7 +18,7 @@ export default class FolderOperations extends Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.id !== this.props.id) {
-      this.setState({folder: null, updatedCount: null, folderTag: ""});
+      this.setState({folder: null, updatedCount: null});
       fetch("/ids/" + this.props.id)
         .then(res => res.json())
         .then(media => {this.setState({ folder:null, entry: media, paths: media.paths })});
@@ -26,22 +27,6 @@ export default class FolderOperations extends Component {
 
   handleRadioChange(e) {
     this.setState({folder: e.target.value});
-  }
-
-  handleFolderInputChange(e) {
-    this.setState({folder: e.target.value});
-  }
-
-  submitFolderTag() {
-    var tagRequest = {folder: this.state.folder, tag: this.state.folderTag};
-    fetch("/entry", {
-      method: 'PATCH',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify(tagRequest)
-     })
-     .then(res => res.json())
-     .then(meta => {this.setState({ updatedCount: meta.tagsApplied })});
-    this.props.addTag(this.state.folderTag);
   }
 
   renderTaggedFolderStats() {
@@ -116,14 +101,16 @@ export default class FolderOperations extends Component {
     }
   }
 
-  handleTagChange(e) {
-    this.setState({folderTag: e.target.value});
-  }
-
-  handleTagKeyPress(e) {
-    if (e.key === 'Enter' && e.target.value) {
-      this.submitFolderTag();
-    }
+  applyTagToFolder(tag) {
+    var tagRequest = {folder: this.state.folder, tag: tag};
+    fetch("/entry", {
+      method: 'PATCH',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(tagRequest)
+     })
+     .then(res => res.json())
+     .then(meta => {this.setState({ updatedCount: meta.tagsApplied })});
+    this.props.addTag(tag);
   }
 
   render() {
@@ -143,19 +130,12 @@ export default class FolderOperations extends Component {
             <label class="float-right">Tag:</label>
           </div>
           <div class="col-6">
-            <input class="float-left" value={this.state.folderTag} type="text" name="tagFolder" onKeyPress={this.handleTagKeyPress.bind(this)} onChange={this.handleTagChange.bind(this)}/>
+            <TagSearch activateTag={this.applyTagToFolder.bind(this)} id={this.props.id} allTags={this.props.allTags} activeTags={[]} deactivateTag={()=>{}} />
           </div>
         </div>
         <div class="row">
           <div class="col-12">
             &nbsp;
-          </div>
-        </div>
-        <div class="container">
-          <div class="row">
-            <div class="col-12">
-              <button onClick={this.submitFolderTag.bind(this)} type="button" class="btn btn-primary">Tag Folder</button>
-            </div>
           </div>
         </div>
         {this.renderTaggedFolderStats()}

@@ -30,14 +30,12 @@ med-cli review /my/big/USB
 ```
 
 # Remaining Todo 
-- Check at end of import
-- Recover if file not at expected location on import
 - Export functionality via tags, include, exclude, --all
-- Wire tag search for folder management
 - Test and use on Windows
 - export supports the -a flag or exclude flag
 - slideshow
 - docs
+- bug of search rendering under buttons/text
 - retag support (change tag a to tag b)
 - youtube videos (howto)
 

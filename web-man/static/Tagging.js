@@ -215,7 +215,7 @@ export default class Tagging extends Component {
           </div>
         </div>
 
-        <FolderOperations id={this.props.id} addTag={this.addTag.bind(this)} />
+        <FolderOperations id={this.props.id} allTags={this.state.allTags} addTag={this.addTag.bind(this)} />
       </div>
     );
   }
