@@ -126,10 +126,10 @@ export default class FolderOperations extends Component {
         </div>
         {this.renderFolderOptions()}
         <div class="row">
-          <div class="col-6">
+          <div class="col-6 float-right">
             <label class="float-right">Tag:</label>
           </div>
-          <div class="col-6">
+          <div class="col-1">
             <TagSearch activateTag={this.applyTagToFolder.bind(this)} id={this.props.id} allTags={this.props.allTags} activeTags={[]} deactivateTag={()=>{}} />
           </div>
         </div>

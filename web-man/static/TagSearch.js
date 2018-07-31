@@ -83,8 +83,22 @@ export default class TagSearch extends Component {
   }
 
   render() {
+
+    // https://github.com/reactjs/react-autocomplete copypasta plus zIndex
+    const menuStyle = {
+      borderRadius: '3px',
+      boxShadow: '0 2px 12px rgba(0, 0, 0, 0.1)',
+      background: 'rgba(255, 255, 255, 0.9)',
+      padding: '2px 0',
+      fontSize: '90%',
+      position: 'fixed',
+      overflow: 'auto',
+      maxHeight: '50%', // TODO: don't cheat, let it flow to the bottom
+      zIndex: 100,
+    };
+
     return ( 
-      <Autocomplete getItemValue={(tag) => tag.label} items={this.getTagsForSearch()} renderItem={this.renderItem.bind(this)} value={this.state.searchText} onChange={this.searchChanged.bind(this)} onSelect={this.selectFromSearch.bind(this)} />
+      <Autocomplete menuStyle={menuStyle} getItemValue={(tag) => tag.label} items={this.getTagsForSearch()} renderItem={this.renderItem.bind(this)} value={this.state.searchText} onChange={this.searchChanged.bind(this)} onSelect={this.selectFromSearch.bind(this)} />
     )
   }
 }
