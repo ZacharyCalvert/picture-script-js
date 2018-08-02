@@ -22,13 +22,11 @@ function getInitialEntries(entryManager, includeAll, requiredReview) {
       (includeAll || !entry.excludeFromExport)
     );
   });
-  console.log("Viable ids", viableIds);
 
   var viableEntries = [];
   for (var id of viableIds) {
     viableEntries.push(entryManager.find(id));
   }
-  console.log("Initial entries", viableEntries);
   return viableEntries;
 }
 

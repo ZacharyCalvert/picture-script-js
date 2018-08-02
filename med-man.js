@@ -7,6 +7,7 @@ var Check = require('./pic-man/CheckEntry.js')
 var MigrateService = require('./pic-man/MigrateService.js')
 var WebReview = require('./web-man/WebReview.js')
 var loadEntryManager = require('./pic-man/EntryManager.js').loadEntryManager;
+var commanderFilter = require('./filter/CommandFilter');
 
 
 program
@@ -52,6 +53,31 @@ program
     console.log("Checking managed at %s", managed);
     new Check(managed).runCheck();
 });
+
+function collect(val, memo) {
+  memo.push(val);
+  return memo;
+}
+
+function addFilterOptions(command) {
+  return command
+  .option('-b --bypass-exclusion', 'Include all export exclusion media')
+  .option('-m --media <type>', 'Restrict to media type (all, photo, video)', /^(all|photo|video)$/i, 'all')
+  .option('-u --not-reviewed', 'Include media that has not been reviewed')
+  .option('-f --include-folder [folder]', 'Directory name to include', collect, [])
+  .option('-t --include-tag [tag]', 'Tag name to include', collect, [])
+  .option('-e --exclude-folder [folder]', 'Directory name to exclude', collect, [])
+  .option('-s --exclude-tag [tag]', 'Exclude content matching this tag', collect, []);
+}
+
+addFilterOptions(program.command('dry-run <managed>'))
+  .action(function(managed, cmd) {
+    var entryManager = loadEntryManager(managed);
+    var ids = commanderFilter(cmd, entryManager);
+    console.log("Id count:", ids.length);
+    console.log(ids);
+  });
+  
 
 program
   .command('tag <managed> <folder> <tag>')

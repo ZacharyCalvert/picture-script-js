@@ -32,12 +32,17 @@ med-cli review /my/big/USB
 # Remaining Todo 
 - Export functionality via tags, include, exclude, --all
 - Test and use on Windows
+- dry run support (no side effects, stats instead)
+- merge two managed directories
+- rename db to yaml
 - export supports the -a flag or exclude flag
 - slideshow
 - docs
 - bug of search rendering under buttons/text
 - retag support (change tag a to tag b)
 - youtube videos (howto)
+- Dupe review via file name
+- reset review (folder/match/etc)
 
 # Contributors
 
