@@ -8,6 +8,7 @@ var MigrateService = require('./pic-man/MigrateService.js')
 var WebReview = require('./web-man/WebReview.js')
 var loadEntryManager = require('./pic-man/EntryManager.js').loadEntryManager;
 var commanderFilter = require('./filter/CommandFilter');
+var SlideShow = require('./web-man/ExpressSlideshow.js')
 
 
 program
@@ -76,6 +77,13 @@ addFilterOptions(program.command('dry-run <managed>'))
     var ids = commanderFilter(cmd, entryManager);
     console.log("Id count:", ids.length);
     console.log(ids);
+  });
+
+addFilterOptions(program.command('slideshow <managed>'))
+  .action(function(managed, cmd) {
+    var entryManager = loadEntryManager(managed);
+    var ids = commanderFilter(cmd, entryManager);
+    SlideShow(ids, managed);
   });
   
 

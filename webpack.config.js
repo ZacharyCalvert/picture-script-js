@@ -4,10 +4,12 @@ const isDev = process.env.NODE_ENV === 'development'
 
 module.exports = {
   mode: isDev ? 'development' : 'production',
-  entry: './web-man/static/index.js',
+  entry: {
+		review: "./web-man/static/index.js",
+		slideshow: "./web-man/static/slideshow.js"
+	},
   output: {
-    path: path.join(__dirname, '/web-man/public'),
-    filename: 'bundle.js'
+    path: path.join(__dirname, '/web-man/public')
   },
   devtool: 'source-map',
   module: {
