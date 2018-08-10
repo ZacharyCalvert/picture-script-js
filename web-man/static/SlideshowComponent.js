@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 
+import Slideshow from './SlideshowManager';
+
+import "./slideshow.css"
+
 export default class SlideshowComponent extends Component {
 
   constructor(props) {
@@ -10,7 +14,7 @@ export default class SlideshowComponent extends Component {
     // fileExcluded: if the file excluded checkbox is currently checked
     // updatedCount: how many were updated or null
     // excludeFolder: whether or not the next request to the folder exclusion is to be true/false
-    this.state = {ids: null, media: null};
+    this.state = {ids: null, media: [], slideshow: null};
   }
 
   componentDidMount() {
@@ -35,18 +39,20 @@ export default class SlideshowComponent extends Component {
     }
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.state.slideshow === null 
+        && this.state.ids !== null 
+        && this.state.ids.length === this.state.media.length) {
 
+      console.log("Starting slideshow");
+      var show = new Slideshow("slideshowdiv", this.state.media);
+      this.setState({slideshow: show});
+    }
+  }
 
   render() {
     return (
-      <div>
-      {this.state.media ? 
-        <h1>{this.state.media.length}</h1>
-        :
-        <div/>
-      }
-      </div>
+      <div class="show" id="slideshowdiv"/>
     )
   }
-  
 }

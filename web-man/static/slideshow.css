@@ -1,0 +1,14 @@
+.show {
+    height: 98vh;
+    width: 100%;
+    position: absolute; 
+    overflow: hidden;
+}
+
+.initial {
+  display: none;
+}
+
+img {
+  position: absolute;
+}

@@ -30,23 +30,18 @@ med-cli review /my/big/USB
 ```
 
 # Remaining Todo 
-- slideshow
 - Export functionality via tags, include, exclude, --all
 - retag support (change tag a to tag b)
 - Test and use on Windows
 - merge two managed directories
 - rename db to yaml
+- Using tag should move it to top of search list
 - docs
-- bug of search rendering under buttons/text
+- Video bug
 - youtube videos (howto)
 - Dupe review via file name
 - reset review (folder/match/etc)
-
-# Potential Slideshows
-
-<https://www.npmjs.com/package/apeman-react-slideshow>
-<https://www.npmjs.com/package/simple-slideshow> 
-<https://www.npmjs.com/package/react-slideshow-image>
+- Re-use last tags
 
 # Contributors
 
