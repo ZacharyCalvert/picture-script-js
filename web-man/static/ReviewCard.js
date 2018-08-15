@@ -35,7 +35,7 @@ export default class ReviewCard extends Component {
       <div>
         {this.state.entry ? (
           <div>
-            <Media id={this.props.id} ext={entry.extensions[0]} path={entry.storedAt} />
+            <Media hide={this.props.hide} id={this.props.id} ext={entry.extensions[0]} path={entry.storedAt} />
             <p class="text-left">Date: {dateStr}</p>
             <p class="text-left">
               Known file paths: 

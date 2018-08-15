@@ -26,7 +26,7 @@ export default class App extends Component {
             <p>On {this.props.currentId + 1} of {this.props.ids.length}, or {progress}</p>
           </div>
           <div class="col-12">
-            <ReviewCard id={this.props.ids[this.props.currentId]}/>
+            <ReviewCard hide={this.props.hide} id={this.props.ids[this.props.currentId]}/>
           </div>
         </div>
       </div>

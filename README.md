@@ -37,11 +37,18 @@ med-cli review /my/big/USB
 - rename db to yaml
 - Using tag should move it to top of search list
 - docs
-- Video bug
 - youtube videos (howto)
 - Dupe review via file name
 - reset review (folder/match/etc)
+- rotate support
 - Re-use last tags
+- Rotation
+- Merge
+- Sync
+- & support on tag matching
+- re-review with filter
+- react router for continuing where you left off + direct link?
+
 
 # Contributors
 

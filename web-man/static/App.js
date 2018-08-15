@@ -59,7 +59,7 @@ export default class App extends Component {
         )}
           {this.state.shasums ? (
         <div class="col-sm-12 col-md-6">
-          <Review currentId={this.state.current} ids={this.state.shasums} onNext={this.next} onPrevious={this.previous}/>
+          <Review hide={false} currentId={this.state.current} ids={this.state.shasums} onNext={this.next} onPrevious={this.previous}/>
           <Review hide={true} currentId={preEmpt} ids={this.state.shasums} onNext={this.next} onPrevious={this.previous}/>
         </div>
           ) : (
