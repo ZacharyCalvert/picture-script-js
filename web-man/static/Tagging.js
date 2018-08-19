@@ -5,6 +5,10 @@ import TagSearch from "./TagSearch.js"
 
 import "./operations.css"
 
+Array.prototype.move = function(from, to) {
+  this.splice(to, 0, this.splice(from, 1)[0]);
+};
+
 /*
 TODO:
 - This will be sloppy for now.  Goal will be to maintain all tags under allTags
@@ -70,10 +74,13 @@ export default class Tagging extends Component {
     this.props.onNext();
   }
 
-  addTagToArray(tag, array) {
+  addTagToArray(tag, array, moveToTop = false) {
     if (array) {
       if (!array.includes(tag)) {
         array.unshift(tag);
+      } else if (moveToTop) {
+        var idx = array.indexOf(tag);
+        array.move(idx, 0); // prototype addition at top 
       }
     } else {
       array = [tag];
@@ -83,7 +90,7 @@ export default class Tagging extends Component {
 
   addTag(tag) {
     var state = {
-      allTags: this.addTagToArray(tag, this.state.allTags), 
+      allTags: this.addTagToArray(tag, this.state.allTags, true), 
       currentTags: this.addTagToArray(tag, this.state.currentTags)
     };
     this.setState(state);

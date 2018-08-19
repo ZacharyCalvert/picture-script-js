@@ -35,7 +35,7 @@ med-cli review /my/big/USB
 - Test and use on Windows
 - merge two managed directories
 - rename db to yaml
-- Using tag should move it to top of search list
+- remove on typo (tag added, removed, should be removed from alltags)
 - docs
 - youtube videos (howto)
 - Dupe review via file name
