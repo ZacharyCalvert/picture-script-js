@@ -130,6 +130,16 @@ export default class Tagging extends Component {
     var currentTags = this.state.currentTags;
     currentTags = currentTags.filter((val) => val !== tag);
     this.setState({currentTags: currentTags});
+
+
+    fetch("/entry/tags")
+      .then(res => res.json())
+      .then(tags => {
+        if (!tags.includes(tag)) {
+          var keep = this.state.allTags.filter(arrTag => arrTag !== tag);
+          this.setState({allTags: keep});
+        }
+      });
   }
 
   handleTagCheckboxChange(e) {
