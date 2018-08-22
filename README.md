@@ -30,9 +30,7 @@ med-cli review /my/big/USB
 ```
 
 # Remaining Todo 
-- remove on typo (tag added, removed, should be removed from alltags)
 - Export functionality via tags, include, exclude, --all
-- retag support (change tag a to tag b)
 - Test and use on Windows
 - merge two managed directories
 - rename db to yaml

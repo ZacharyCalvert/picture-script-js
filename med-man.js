@@ -115,5 +115,14 @@ program
     console.log("%d files tagged with %s", tagged.count, tag);
   });
 
+program
+  .command('retag <managed> <tag> <newtag>')
+  .action(function(managed, tag, newtag, cmd) {
+    var tagged = {count:0};
+    var entryManager = loadEntryManager(managed);
+    entryManager.renameTag(tag, newtag);
+    entryManager.save();
+  });
+
 
 program.parse(process.argv);

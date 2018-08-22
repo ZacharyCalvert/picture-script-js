@@ -49,6 +49,18 @@ EntryManager.prototype.tagFolder = function (folder, tag) {
   return meta;
 }
 
+EntryManager.prototype.renameTag = function(oldTag, newTag) {
+
+  for (var key in this.data) {
+    var entry = this.data[key];
+    if (entry.tags && entry.tags.includes(oldTag)) {
+      entry.tags[entry.tags.indexOf(oldTag)] = newTag;
+      var removedDuplicates = Array.from(new Set(entry.tags));
+      entry.tags = removedDuplicates;
+    }
+  }
+}
+
 EntryManager.prototype.setReviewDone = function(sha256Sum, done = true) {
   console.log("Setting %s review done status to " + done, sha256Sum);
   this.data[sha256Sum].reviewDone = done;
