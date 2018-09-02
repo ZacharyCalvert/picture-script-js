@@ -9,6 +9,7 @@ var WebReview = require('./web-man/WebReview.js')
 var loadEntryManager = require('./pic-man/EntryManager.js').loadEntryManager;
 var commanderFilter = require('./filter/CommandFilter');
 var SlideShow = require('./web-man/ExpressSlideshow.js')
+var ExportMedia = require('./pic-man/ExportMedia.js')
 
 
 program
@@ -84,6 +85,13 @@ addFilterOptions(program.command('slideshow <managed>'))
     var entryManager = loadEntryManager(managed);
     var ids = commanderFilter(cmd, entryManager);
     SlideShow(ids, managed);
+  });
+
+addFilterOptions(program.command('export <managed> <target>'))
+  .action(function(managed, target, cmd) {
+    var entryManager = loadEntryManager(managed);
+    var ids = commanderFilter(cmd, entryManager);
+    ExportMedia(ids, managed, entryManager, target);
   });
   
 

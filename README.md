@@ -30,7 +30,6 @@ med-cli review /my/big/USB
 ```
 
 # Remaining Todo 
-- Export functionality via tags, include, exclude, --all
 - Test and use on Windows
 - merge two managed directories
 - rename db to yaml
@@ -41,8 +40,8 @@ med-cli review /my/big/USB
 - rotate support
 - Re-use last tags
 - Rotation
-- Merge
-- Sync
+- Merge (a -> b)
+- Sync (a <-  -> b )
 - & support on tag matching
 - re-review with filter
 - react router for continuing where you left off + direct link?
