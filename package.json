@@ -8,7 +8,7 @@
     "start": "node server.js",
     "build": "npm test & webpack --progress",
     "WDS": "npm test & webpack-dev-server --inline --hot",
-    "rel": "npm test && git add -f ./web-man/public/* && git commit -m \"Transpiled and minified bundles\" && git push origin master && npm version patch -m \"Patch bump to %s\" && git push --tags && git push origin master"
+    "rel": "npm test && git add -f ./web-man/public/* && if git commit -m 'transpiled and minified bundles' ; then echo 'Bundles updated' ; else echo 'No changes to bundles' ; fi && git push origin master && npm version patch -m \"Patch bump to %s\" && git push --tags && git push origin master"
   },
   "repository": {
     "type": "git",
