@@ -31,6 +31,9 @@ med-cli review /my/big/USB
 
 # Remaining Todo 
 - Test and use on Windows
+- Release 1.0 (update git commit of bundle.js)
+- Merge (a -> b)
+- Sync (a <-  -> b )
 - merge two managed directories
 - rename db to yaml
 - docs
@@ -40,8 +43,6 @@ med-cli review /my/big/USB
 - rotate support
 - Re-use last tags
 - Rotation
-- Merge (a -> b)
-- Sync (a <-  -> b )
 - & support on tag matching
 - re-review with filter
 - react router for continuing where you left off + direct link?
