@@ -1,5 +1,6 @@
 var fs = require ('fs');
 var EntryManager = require('./EntryManager.js');
+const path = require('path');
 
 function Check(folder) {
   this.folder = folder;
@@ -11,7 +12,7 @@ Check.prototype.runCheck = function () {
   var stats = {total: ids.length, healthy: 0, ignored:0, notFound: 0, reviewed: 0}
   for (var id of ids) {
     var entry = this.entryManager.getEntry(id);
-    var file = this.folder + entry.storedAt;
+    var file = path.join(this.folder, entry.storedAt);
 
     if (entry.reviewDone || entry.ignored) {
       stats.reviewed++;
